@@ -1,0 +1,120 @@
+.authContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(to right, #002839 50%, transparent 50%);
+}
+
+.authForm {
+    width: 50%;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: transparent;
+}
+
+.welcomeInfo {
+    width: 50%;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+input {
+    width: 30%;
+    height: 50px;
+    display: block;
+    padding: 5px 15px;
+    margin: 10px auto;
+    background-color: #a8a8a8;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+.signBtn {
+    width: 30%;
+    height: 40px;
+    display: block;
+    border: #2D2D2D;
+    font: 800 18px "Inter Semi Bold", sans-serif;
+    background: #021a2f;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px auto;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.signBtn:hover {
+    background: #032542;
+    text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+h1,
+p {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.authFormHeader {
+    position: relative;
+    font-size: 75px;
+    font-weight: 1000;
+    color: white;
+    text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
+    font-family: "Inter Semi Bold", sans-serif;
+}
+
+.authForm p {
+    color: white;
+    font: 700 15px "Inter Semi Bold", sans-serif;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.lnk {
+    width: 90px;
+    display: block;
+    font: 800 18px "Inter Semi Bold", sans-serif;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    margin: 10px;
+    color: #949494;
+    transition: text-decoration 0.3s ease, color 0.3s ease;
+}
+
+.lnk:hover {
+    text-decoration: underline;
+    color: #a9a9a9;
+    background: transparent; /* Add this line to prevent the blue background on hover */
+}
+
+.authLink {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    background-color: transparent;
+    transform: translateX(-50%);
+    filter: brightness(0.7)
+}
+.welcomeDesc,
+.welcomeHeader{
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+.welcomeDesc{
+    font:  800 18px "Inter Semi Bold", sans-serif;
+    margin-top: 20px;
+}
+
+.welcomeHeader{
+    font:  800 50px "Inter Semi Bold", sans-serif;
+    margin-bottom: 20px;
+}
