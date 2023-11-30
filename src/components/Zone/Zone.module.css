@@ -1,0 +1,76 @@
+.zonesHeader {
+    width: 100%;
+    height: 200px;
+    text-align: center;
+    font: 900 128px "Inter Semi Bold", sans-serif;
+    color: #7F8F96;
+}
+
+
+.zoneName,
+.zoneLogo,
+.zoneProperties,
+.zoneProperties .total,
+.zoneProperties .free {
+    position: absolute;
+    pointer-events: none;
+    background-color: transparent;
+}
+
+.zoneLogo {
+    width: 150px;
+    margin: 10px;
+}
+
+.zoneList {
+    display: flex;
+    width: 100%;
+    padding: 0 150px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.zoneContainer {
+    position: relative;
+    width: calc(50% - 20px);
+    height: 300px;
+    margin-bottom: 30px;
+    box-sizing: border-box;
+    background: rgba(8, 94, 131, 0.50);
+    transition: background 0.3s ease;
+    overflow: hidden;
+    border-radius: 25px;
+}
+.zoneContainer:hover {
+    background: rgba(8, 94, 131, 0.90);
+}
+
+
+.zoneName {
+    top: 0;
+    right: 40px;
+    height: 150px;
+    font: 900 100px "Inter Semi Bold", sans-serif;
+    color: #7F8F96;
+    word-wrap: break-word;
+}
+
+.zoneProperties {
+    left: 50%;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    transform: translateX(-50%);
+    word-wrap: break-word;
+    font: 900 56px "Inter Semi Bold", sans-serif;
+    color: #C0C0C0;
+}
+
+
+.zoneProperties .total {
+    left: 20px;
+}
+
+.zoneProperties .free {
+    right: 20px;
+}
