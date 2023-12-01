@@ -1,9 +1,20 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import ZoneItem from "./ZoneItem";
 import cl from './Zone.module.css'
 
 const ZoneList = ({zones}) => {
-    if (!zones.length) {
+    const [showNotFound, setShowNotFound] = useState(false);
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setShowNotFound(true);
+        }, 1000);
+
+        return () => {
+            clearTimeout(timeoutId);
+        };
+    }, []);
+    if (!zones.length && showNotFound) {
         return (
             <h1 style={{textAlign: 'center'}}>
                 Zones not found!
