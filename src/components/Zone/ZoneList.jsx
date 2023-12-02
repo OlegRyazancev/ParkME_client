@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import ZoneItem from "./ZoneItem";
-import cl from './Zone.module.css'
+import cl from '../../pages/Zones/Zones.module.css'
 
 const ZoneList = ({zones}) => {
     const [showNotFound, setShowNotFound] = useState(false);
