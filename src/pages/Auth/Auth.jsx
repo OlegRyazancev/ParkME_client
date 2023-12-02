@@ -105,7 +105,7 @@ const Auth = () => {
 
             <div className={cl.welcomeInfo}>
                 <p className={cl.welcomeHeader}>Welcome to</p>
-                <img src={appLogo} alt="auth_logo"/>
+                <img src={appLogo} alt="auth_logo" style={{backgroundColor: "transparent"}}/>
                 <p className={cl.welcomeDesc}>Say goodbye to the stress of finding a spot with our intuitive reservation
                     system</p>
                 <p className={cl.welcomeDesc}>Start your journey with ParkMe and make parking a breeze!</p>
