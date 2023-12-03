@@ -1,0 +1,17 @@
+.actBtn {
+    width: 80px;
+    height: 30px;
+    border: #2D2D2D;
+    font: 800 15px "Inter Semi Bold", sans-serif;
+    background: #021a2f;
+    cursor: pointer;
+    border-radius: 5px;
+    color: #afafaf;
+    transition: color 0.3s ease;
+    margin-left: 5px;
+    user-select: none;
+}
+
+.actBtn:hover{
+    background-color: #042b4d;
+}
