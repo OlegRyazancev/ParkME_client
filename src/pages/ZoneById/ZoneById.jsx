@@ -4,7 +4,6 @@ import {useFetching} from "../../hooks/useFetching";
 import ZoneService from "../../service/ZoneService";
 import Loader from "../../components/UI/Loader/Loader";
 import {observer} from "mobx-react-lite";
-import Navbar from "../../components/UI/Navbar/Navbar";
 import cl from "./ZoneById.module.css"
 import PlaceList from "../../components/Place/PlaceList";
 
@@ -26,7 +25,6 @@ const ZoneById = () => {
 
     return (
         <div className="App">
-            <Navbar/>
             <div className={cl.zoneByIdHeader}>Zone {zone.number}</div>
             <hr className={cl.hrLine}/>
             {isLoading && <Loader/>}

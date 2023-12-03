@@ -5,6 +5,7 @@ import {observer} from "mobx-react-lite";
 import {BrowserRouter} from "react-router-dom";
 import AppRouter from "./components/AppRouter";
 import Loader from "./components/UI/Loader/Loader";
+import Navbar from "./components/UI/Navbar/Navbar";
 
 function App() {
 
@@ -32,7 +33,13 @@ function App() {
 
     return (
         <BrowserRouter>
-            <AppRouter/>
+            {store.isAuth ?
+                <>
+                    <Navbar/>
+                    <AppRouter/>
+                </>
+                : <AppRouter/>
+            }
         </BrowserRouter>
     );
 }
