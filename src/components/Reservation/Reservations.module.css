@@ -1,4 +1,6 @@
 .timeRange {
-    width: 100%;
-    text-align: right;
+    width: 400px;
+    text-align: center;
+    padding: 10px;
+    font-size: 17px;
 }

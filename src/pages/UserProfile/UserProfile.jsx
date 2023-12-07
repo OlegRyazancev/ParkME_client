@@ -66,7 +66,7 @@ const UserProfile = () => {
                 </div>
                 <div className={cl.userProps}>
                     <div className={cl.userCars}>
-                        <p className={cl.propName} onClick={toggleCars}>cars</p>
+                        <p className={cl.propName} onClick={toggleCars}>cars <ActBtn label="add"/> </p>
                         <div className="slide-container">
                             <TransitionGroup>
                             {showCars && (
@@ -78,7 +78,7 @@ const UserProfile = () => {
                         </div>
                     </div>
                     <div className={cl.userReservations}>
-                        <p className={cl.propName} onClick={toggleReservations}>reservations</p>
+                        <p className={cl.propName} onClick={toggleReservations}>reservations <ActBtn label="create"/></p>
                         <div className="slide-container">
                             <TransitionGroup>
                                 {showReservations && (
