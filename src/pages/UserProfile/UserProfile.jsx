@@ -23,14 +23,10 @@ const UserProfile = () => {
     const [modalError, setModalError] = useState(false);
     const [modalReservationInfo, setModalReservationInfo] = useState(false);
     const [error, setError] = useState('');
-    const [reservationData, setReservationData] = useState({})
+    const [reservationData, setReservationData] = useState({});
 
     const toggleCars = () => {
         setShowCars(!showCars);
-    }
-    const reservationInfo = (reservation) => {
-        setModalReservationInfo(true);
-        setReservationData(reservation)
     }
     const toggleReservations = () => {
         setShowReservations(!showReservations);
@@ -54,7 +50,6 @@ const UserProfile = () => {
     const [deleteCar] = useFetching(async (id) => {
         try {
             await CarService.deleteCarById(id);
-            window.location.reload();
         } catch (e) {
             console.log(e)
             setModalError(true)
@@ -62,16 +57,22 @@ const UserProfile = () => {
         }
     })
 
+    const reservationInfo = (reservation) => {
+        setModalReservationInfo(true);
+        setReservationData(reservation)
+    }
+
 
     useEffect(() => {
         fetchUser(store.user.id)
-        fetchCars(store.user.id)
-        fetchReservations(store.user.id)
-        setReservationData((prevReservationData) => ({
-            ...prevReservationData,
-            ...reservations,
-        }));
-    }, [showCars, showReservations, reservations]);
+        if (showCars) {
+            fetchCars(store.user.id)
+        }
+        if (showReservations) {
+            fetchReservations(store.user.id)
+        }
+
+    }, [showCars, showReservations])
 
 
     return (

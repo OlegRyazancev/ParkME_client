@@ -46,7 +46,6 @@ const ReservationsTable = ({reservations, reservationInfo}) => {
                             <td></td>
                         </>
                     }
-
                     <td className={cl.timeRange} onClick={() => reservationInfo(reservation)}>
                         {reservation.timeFrom} - {reservation.timeTo}
                     </td>
