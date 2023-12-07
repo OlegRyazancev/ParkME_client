@@ -2,7 +2,7 @@ import React from 'react';
 import cl from "./Reservations.module.css";
 import ActBtn from "../UI/Button/ActBtn";
 
-const ReservationsTable = ({reservations}) => {
+const ReservationsTable = ({reservations, reservationInfo}) => {
 
     const getStatusColor = (status) => {
         switch (status) {
@@ -18,6 +18,12 @@ const ReservationsTable = ({reservations}) => {
                 return 'white';
         }
     };
+
+    if (!reservations.length) {
+        return (
+            <div style={{color: "#850000"}}>Reservations not found!</div>
+        )
+    }
 
     return (
         <table>
@@ -41,7 +47,7 @@ const ReservationsTable = ({reservations}) => {
                         </>
                     }
 
-                    <td className={cl.timeRange}>
+                    <td className={cl.timeRange} onClick={() => reservationInfo(reservation)}>
                         {reservation.timeFrom} - {reservation.timeTo}
                     </td>
                     <td style={{color: getStatusColor(reservation.status)}}>
