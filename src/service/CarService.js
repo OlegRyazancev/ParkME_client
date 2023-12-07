@@ -8,4 +8,8 @@ export default class CarService {
     static async deleteCarById(id) {
         return await $api.delete('/cars/' + id)
     }
+
+    static async create(userId, carData) {
+        return await $api.post(`/users/${userId}/cars`, carData)
+    }
 }
