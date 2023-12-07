@@ -10,6 +10,8 @@ import ReservationsTable from "../../components/Reservation/ReservationsTable";
 import CarsTable from "../../components/Car/CarsTable";
 import ActBtn from "../../components/UI/Button/ActBtn"
 import {CSSTransition, TransitionGroup} from "react-transition-group";
+import Modal from "../../components/UI/Modal/Modal";
+import ReservationInfo from "../../components/Reservation/ReservationInfo";
 
 const UserProfile = () => {
     const {store} = useContext(Context);
@@ -18,9 +20,17 @@ const UserProfile = () => {
     const [reservations, setReservations] = useState([]);
     const [showCars, setShowCars] = useState(false);
     const [showReservations, setShowReservations] = useState(false);
+    const [modalError, setModalError] = useState(false);
+    const [modalReservationInfo, setModalReservationInfo] = useState(false);
+    const [error, setError] = useState('');
+    const [reservationData, setReservationData] = useState({})
 
     const toggleCars = () => {
         setShowCars(!showCars);
+    }
+    const reservationInfo = (reservation) => {
+        setModalReservationInfo(true);
+        setReservationData(reservation)
     }
     const toggleReservations = () => {
         setShowReservations(!showReservations);
@@ -41,49 +51,73 @@ const UserProfile = () => {
         setReservations(response.data);
     })
 
+    const [deleteCar] = useFetching(async (id) => {
+        try {
+            await CarService.deleteCarById(id);
+            window.location.reload();
+        } catch (e) {
+            console.log(e)
+            setModalError(true)
+            setError(e.response.data.message)
+        }
+    })
+
+
     useEffect(() => {
         fetchUser(store.user.id)
-        if (showCars) {
-            fetchCars(store.user.id)
-        }
-        if (showReservations) {
-            fetchReservations(store.user.id)
-        }
-
-    }, [showCars, showReservations]);
+        fetchCars(store.user.id)
+        fetchReservations(store.user.id)
+        setReservationData((prevReservationData) => ({
+            ...prevReservationData,
+            ...reservations,
+        }));
+    }, [showCars, showReservations, reservations]);
 
 
     return (
         <div className="App">
             <div className={cl.profileHeader}>Profile</div>
+            <Modal visible={modalError}
+                   setVisible={setModalError}>
+                {error}
+            </Modal>
+            <Modal visible={modalReservationInfo}
+                   setVisible={setModalReservationInfo}>
+                <ReservationInfo reservation={reservationData}/>
+            </Modal>
             <hr className={cl.hrLine}/>
             <div className={cl.profileContainer}>
                 <div className={cl.userInfo}>
                     <p><span className={cl.propName}>name:</span> {user.name}</p>
                     <p><span className={cl.propName}>email:</span> {user.email}</p>
                     <ActBtn label="edit"/>
-
                 </div>
                 <div className={cl.userProps}>
                     <div className={cl.userCars}>
-                        <p className={cl.propName} onClick={toggleCars}>cars <ActBtn label="add"/> </p>
+                        <p className={cl.propName} onClick={toggleCars}>cars<ActBtn label="add"/></p>
                         <div className="slide-container">
                             <TransitionGroup>
-                            {showCars && (
-                                <CSSTransition classNames="slide" timeout={300}>
-                                    <CarsTable cars={cars} />
-                                </CSSTransition>
-                            )}
-                        </TransitionGroup>
+                                {showCars && (
+                                    <CSSTransition classNames="slide"
+                                                   timeout={300}>
+                                        <CarsTable cars={cars}
+                                                   onDelete={deleteCar}/>
+                                    </CSSTransition>
+                                )}
+                            </TransitionGroup>
                         </div>
                     </div>
                     <div className={cl.userReservations}>
-                        <p className={cl.propName} onClick={toggleReservations}>reservations <ActBtn label="create"/></p>
+                        <p className={cl.propName} onClick={toggleReservations}>reservations<ActBtn
+                            label="create"/>
+                        </p>
                         <div className="slide-container">
                             <TransitionGroup>
                                 {showReservations && (
-                                    <CSSTransition classNames="slide" timeout={300}>
-                                        <ReservationsTable reservations={reservations} />
+                                    <CSSTransition classNames="slide"
+                                                   timeout={300}>
+                                        <ReservationsTable reservations={reservations}
+                                                           reservationInfo={reservationInfo}/>
                                     </CSSTransition>
                                 )}
                             </TransitionGroup>
@@ -92,7 +126,6 @@ const UserProfile = () => {
                 </div>
             </div>
         </div>
-
     );
 };
 

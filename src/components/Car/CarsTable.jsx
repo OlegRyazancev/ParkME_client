@@ -2,7 +2,18 @@ import React from 'react';
 import cl from "./Cars.module.css";
 import ActBtn from "../UI/Button/ActBtn";
 
-const CarsTable = ({ cars }) => {
+const CarsTable = ({cars, onDelete}) => {
+
+    const handleDelete = (id) => {
+        onDelete(id);
+    }
+
+    if (!cars.length) {
+        return (
+            <div style={{color: "#850000"}}>cars not found!</div>
+        )
+    }
+
     return (
         <table>
             <tbody>
@@ -15,7 +26,7 @@ const CarsTable = ({ cars }) => {
                         <ActBtn label="edit"/>
                     </td>
                     <td>
-                        <ActBtn label="delete"/>
+                        <ActBtn label="delete" action={() => handleDelete(car.id)}/>
                     </td>
                 </tr>
             ))}
