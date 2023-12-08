@@ -6,6 +6,10 @@
     cursor: pointer;
 }
 
+.timeRange:hover {
+    text-decoration: underline;
+}
+
 .resHeader {
     text-align: center;
     font-weight: 1200;

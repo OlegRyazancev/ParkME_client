@@ -11,13 +11,13 @@ const ReservationsTable = ({reservations, reservationInfo, onCancel}) => {
     const getStatusColor = (status) => {
         switch (status) {
             case 'ACTIVE':
-                return '#096209';
+                return '#135d13';
             case 'CANCELED':
-                return '#850000';
+                return '#7c2020';
             case 'PLANNED':
-                return '#986601'
+                return '#917321'
             case 'COMPLETED':
-                return '#017373';
+                return '#187777';
             default:
                 return 'white';
         }
