@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import cl from "./Cars.module.css";
 import ActBtn from "../UI/Button/ActBtn";
-import {useFetching} from "../../hooks/useFetching";
-import CarService from "../../service/CarService";
 import CarForm from "./CarForm";
 import Modal from "../UI/Modal/Modal";
 

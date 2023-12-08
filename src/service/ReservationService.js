@@ -1,5 +1,4 @@
 import $api from "../http";
-import {eventWrapper} from "@testing-library/user-event/dist/utils";
 
 export default class ReservationService {
     static async getByUserId(id) {

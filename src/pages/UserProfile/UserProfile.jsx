@@ -58,7 +58,6 @@ const UserProfile = () => {
             setMessage("Car successfully deleted!")
             setModalMessage(true)
         } catch (e) {
-            console.log(e)
             setModalMessage(true)
             setMessage(e.response.data.message)
         }
@@ -114,7 +113,8 @@ const UserProfile = () => {
                 })
             })
         } catch (error) {
-
+            setModalMessage(true)
+            setMessage(error.response.data.message)
         }
     })
 
@@ -180,7 +180,8 @@ const UserProfile = () => {
                                             onDelete={deleteCar}
                                             onUpdate={updateCar}
                                             validationMsg={validationMessage}
-                                            onModalClose={clearValidationMsg}/>
+                                            onModalClose={clearValidationMsg}
+                                        />
                                     </CSSTransition>
                                 )}
                             </TransitionGroup>
@@ -199,7 +200,9 @@ const UserProfile = () => {
                                                    timeout={300}>
                                         <ReservationsTable
                                             reservations={reservations}
-                                            reservationInfo={reservationInfo}/>
+                                            reservationInfo={reservationInfo}
+                                            onCancel={cancelReservation}
+                                        />
                                     </CSSTransition>
                                 )}
                             </TransitionGroup>

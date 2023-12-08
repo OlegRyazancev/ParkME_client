@@ -2,7 +2,11 @@ import React from 'react';
 import cl from "./Reservations.module.css";
 import ActBtn from "../UI/Button/ActBtn";
 
-const ReservationsTable = ({reservations, reservationInfo}) => {
+const ReservationsTable = ({reservations, reservationInfo, onCancel}) => {
+
+    const handleCancel = (id) => {
+        onCancel(id);
+    }
 
     const getStatusColor = (status) => {
         switch (status) {
@@ -34,7 +38,8 @@ const ReservationsTable = ({reservations, reservationInfo}) => {
                         ?
                         <>
                             <td>
-                                <ActBtn label="cancel"/>
+                                <ActBtn label="cancel"
+                                        action={() => handleCancel(reservation.id)}/>
                             </td>
                             <td>
                                 <ActBtn label="edit"/>
@@ -46,7 +51,8 @@ const ReservationsTable = ({reservations, reservationInfo}) => {
                             <td></td>
                         </>
                     }
-                    <td className={cl.timeRange} onClick={() => reservationInfo(reservation)}>
+                    <td className={cl.timeRange}
+                        onClick={() => reservationInfo(reservation)}>
                         {reservation.timeFrom} - {reservation.timeTo}
                     </td>
                     <td style={{color: getStatusColor(reservation.status)}}>
