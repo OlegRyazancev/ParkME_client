@@ -23,20 +23,21 @@ const UserProfile = () => {
     const [showCars, setShowCars] = useState(false);
     const [showReservations, setShowReservations] = useState(false);
 
-    const [modalMessage, setModalMessage] = useState(false);
     const [message, setMessage] = useState('');
 
-    const [modalReservationInfo, setModalReservationInfo] = useState(false);
     const [reservationData, setReservationData] = useState({});
 
+    const [modalMessage, setModalMessage] = useState(false);
+    const [modalReservationInfo, setModalReservationInfo] = useState(false);
     const [modalCreateCar, setModalCreateCar] = useState(false);
+    const [modalUpdateCar, setModalUpdateCar] = useState(false);
 
     const [validationMessage, setValidationMessage] = useState('');
 
     const openModalCreateCar = () => setModalCreateCar(true);
     const toggleCars = () => setShowCars(!showCars);
-
     const toggleReservations = () => setShowReservations(!showReservations);
+    const clearValidationMsg = () => setValidationMessage('');
 
     const [fetchUser] = useFetching(async (id) => {
         setUser((await UserService.getById(id)).data);
@@ -54,7 +55,7 @@ const UserProfile = () => {
         try {
             await CarService.deleteCarById(id);
             setCars(prevCars => prevCars.filter(car => car.id !== id));
-            setMessage("Car successfully deleted")
+            setMessage("Car successfully deleted!")
             setModalMessage(true)
         } catch (e) {
             console.log(e)
@@ -67,7 +68,7 @@ const UserProfile = () => {
         try {
             const response = await CarService.create(user.id, carData);
             setModalCreateCar(false);
-            setMessage("Car successfully created")
+            setMessage("Car successfully created!")
             setModalMessage(true)
             const newCar = response.data;
             setCars((prevCars) => [...prevCars, newCar]);
@@ -77,6 +78,45 @@ const UserProfile = () => {
             setValidationMessage(errorMessage);
         }
     });
+
+    const [updateCar] = useFetching(async (carData) => {
+        try {
+            const response = await CarService.update(carData)
+            setModalUpdateCar(false);
+            setMessage("Car successfully updated!")
+            setModalMessage(true)
+            const updatedCar = response.data;
+            setCars((prevCars) => {
+                return prevCars.map((car) => (
+                    car.id === updatedCar.id
+                        ? updatedCar
+                        : car
+                ));
+            });
+            setValidationMessage('')
+        } catch (error) {
+            const errorMessage =
+                error.response.data?.errors?.number || error.response.data?.message
+            setValidationMessage(errorMessage);
+        }
+    });
+
+    const [cancelReservation] = useFetching(async (id) => {
+        try {
+            const response = await ReservationService.cancel(id);
+            setMessage("Reservation successfully canceled!")
+            setModalMessage(true)
+            setReservations((prevReservations) => {
+                return prevReservations.map((reservation) => {
+                    return reservation.id === id
+                        ? {...reservation, status: response.data.status}
+                        : reservation
+                })
+            })
+        } catch (error) {
+
+        }
+    })
 
     const reservationInfo = (reservation) => {
         setModalReservationInfo(true);
@@ -98,26 +138,37 @@ const UserProfile = () => {
         <div className="App">
             <div className={cl.profileHeader}>Profile</div>
             <Modal visible={modalMessage}
-                   setVisible={setModalMessage}>{message}</Modal>
+                   setVisible={setModalMessage}>
+                {message}
+            </Modal>
             <Modal visible={modalReservationInfo}
                    setVisible={setModalReservationInfo}>
                 <ReservationInfo reservation={reservationData}/>
             </Modal>
-            <Modal visible={modalCreateCar} setVisible={setModalCreateCar}>
-                <CarForm onSubmit={createCar} validation={validationMessage}/>
+            <Modal visible={modalCreateCar}
+                   setVisible={setModalCreateCar}
+                   onClose={clearValidationMsg}>
+                <CarForm onSubmit={createCar}
+                         validation={validationMessage}/>
             </Modal>
             <hr className={cl.hrLine}/>
             <div className={cl.profileContainer}>
                 <div className={cl.userInfo}>
-                    <p><span className={cl.propName}>name:</span> {user.name}
+                    <p>
+                        <span className={cl.propName}>name:</span>
+                        {user.name}
                     </p>
-                    <p><span className={cl.propName}>email:</span> {user.email}
+                    <p>
+                        <span className={cl.propName}>email:</span>
+                        {user.email}
                     </p>
                     <ActBtn label="edit"/>
                 </div>
                 <div className={cl.userProps}>
                     <div className={cl.userCars}>
-                        <p className={cl.propName} onClick={toggleCars}>cars</p>
+                        <p className={cl.propName} onClick={toggleCars}>
+                            cars
+                        </p>
                         <ActBtn label="add" action={openModalCreateCar}/>
                         <div className="slide-container">
                             <TransitionGroup>
@@ -126,7 +177,10 @@ const UserProfile = () => {
                                                    timeout={300}>
                                         <CarsTable
                                             cars={cars}
-                                            onDelete={deleteCar}/>
+                                            onDelete={deleteCar}
+                                            onUpdate={updateCar}
+                                            validationMsg={validationMessage}
+                                            onModalClose={clearValidationMsg}/>
                                     </CSSTransition>
                                 )}
                             </TransitionGroup>
@@ -134,8 +188,9 @@ const UserProfile = () => {
                     </div>
 
                     <div className={cl.userReservations}>
-                        <p className={cl.propName}
-                           onClick={toggleReservations}>reservations</p>
+                        <p className={cl.propName} onClick={toggleReservations}>
+                            reservations
+                        </p>
                         <ActBtn label="create"/>
                         <div className="slide-container">
                             <TransitionGroup>

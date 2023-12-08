@@ -1,11 +1,24 @@
 import React, {useState} from 'react';
 import ActBtn from "../UI/Button/ActBtn";
 
-const CarForm = ({onSubmit, validation}) => {
+const CarForm = ({onSubmit, validation, carId}) => {
     const [carNumber, setCarNumber] = useState('');
+    let buttonLabel;
 
     const handleSubmit = () => {
-        onSubmit({number: carNumber});
+        if (carId) {
+            onSubmit({
+                id: carId,
+                number: carNumber
+            });
+            buttonLabel = 'edit'
+        } else {
+            onSubmit({
+                number: carNumber
+            });
+            buttonLabel = 'create'
+        }
+
         setCarNumber('');
     };
 
@@ -18,7 +31,7 @@ const CarForm = ({onSubmit, validation}) => {
                 placeholder="carNumber"
             />
             <p>{validation}</p>
-            <ActBtn action={handleSubmit} label={"Submit"}/>
+            <ActBtn action={handleSubmit} label={buttonLabel}/>
         </div>
     );
 };
