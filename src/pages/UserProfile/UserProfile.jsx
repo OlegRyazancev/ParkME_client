@@ -13,6 +13,7 @@ import {CSSTransition, TransitionGroup} from "react-transition-group";
 import Modal from "../../components/UI/Modal/Modal";
 import ReservationInfo from "../../components/Reservation/ReservationInfo";
 import CarForm from "../../components/Car/CarForm";
+import {useNavigate} from "react-router-dom";
 
 const UserProfile = () => {
     const {store} = useContext(Context);
@@ -34,6 +35,7 @@ const UserProfile = () => {
 
     const [validationMessage, setValidationMessage] = useState('');
 
+    const navigate = useNavigate();
     const openModalCreateCar = () => setModalCreateCar(true);
     const toggleCars = () => setShowCars(!showCars);
     const toggleReservations = () => setShowReservations(!showReservations);
@@ -192,7 +194,8 @@ const UserProfile = () => {
                         <p className={cl.propName} onClick={toggleReservations}>
                             reservations
                         </p>
-                        <ActBtn label="create"/>
+                        <ActBtn label="create"
+                                action={() => navigate('/new-reservation')}/>
                         <div className="slide-container">
                             <TransitionGroup>
                                 {showReservations && (
