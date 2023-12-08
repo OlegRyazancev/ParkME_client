@@ -3,9 +3,8 @@ import PlaceItem from "./PlaceItem";
 import cl from "./Place.module.css"
 
 const PlaceList = ({places}) => {
-
-
     const [showNotFound, setShowNotFound] = useState(false);
+    const sortedPlaces = places.slice().sort((a, b) => a.number - b.number);
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
@@ -16,7 +15,9 @@ const PlaceList = ({places}) => {
             clearTimeout(timeoutId);
         };
     }, []);
-    if (!places.length && showNotFound) {
+
+
+    if (!sortedPlaces.length && showNotFound) {
         return (
             <h1 style={{textAlign: 'center'}}>
                 Places not found!
@@ -25,7 +26,7 @@ const PlaceList = ({places}) => {
     }
     return (
         <div className={cl.placeList}>
-            {places.map((place) =>
+            {sortedPlaces.map((place) =>
                 <PlaceItem place={place} key={place.id}/>
             )}
         </div>
