@@ -127,15 +127,16 @@ const UserProfile = () => {
         try {
             console.log(store.user)
             console.log(userData)
-            const response = await UserService.update(
+            await UserService.update(
                 userData.id,
                 userData.name,
                 userData.email,
                 userData.password
             );
             setModalUpdateUser(false);
-            setMessage("User successfully updated!");
+            setMessage("User successfully updated! Please reload the page");
             setModalMessage(true);
+            console.log(store.user.name)
         } catch (error) {
             const errorMessage =
                 error.response.data?.errors?.email

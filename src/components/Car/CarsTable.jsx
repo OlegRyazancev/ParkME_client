@@ -26,7 +26,7 @@ const CarsTable = ({cars, onDelete, onUpdate, validationMsg, onModalClose}) => {
 
     if (!cars.length) {
         return (
-            <div style={{color: "#850000"}}>cars not found!</div>
+            <div className={cl.carException}>Cars not found!</div>
         )
     }
 

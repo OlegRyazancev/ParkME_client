@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import ActBtn from "../UI/Button/ActBtn";
+import cl from "./User.module.css"
+import {observer} from "mobx-react-lite";
 
 const UserForm = ({onSubmit, user, validation}) => {
     const [name, setName] = useState('');
@@ -26,34 +28,36 @@ const UserForm = ({onSubmit, user, validation}) => {
     }
 
     return (
-        <div>
-            <div>
-                <span>Enter new name or keep current: </span>
+        <div className={cl.formContainer}>
+            <p className={cl.formHeader}>Edit user</p>
+            <div className={cl.inputContainer}>
+                <span>Enter old / new name: </span>
                 <input
                     onChange={(e) => setName(e.target.value)}
                     type="text"
                     value={name}
-                    defaultValue={user?.name}
+                    placeholder={"Name"}
                 />
             </div>
-            <div>
-                <span>Enter new email or keep current: </span>
+            <div className={cl.inputContainer}>
+                <span>Enter old / new email: </span>
                 <input
                     onChange={(e) => setEmail(e.target.value)}
                     type="text"
                     value={email}
-                    defaultValue={user?.email}
+                    placeholder={"email@example.com"}
                 />
             </div>
-            <div>
-                <span>Enter old/new password: </span>
+            <div className={cl.inputContainer}>
+                <span>Enter old / new password: </span>
                 <input
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
                     value={password}
+                    placeholder={"password"}
                 />
             </div>
-            <p>
+            <p className={cl.validationMsg}>
                 {validationMessage
                     ? validationMessage
                     : validation}
@@ -64,4 +68,4 @@ const UserForm = ({onSubmit, user, validation}) => {
     );
 };
 
-export default UserForm;
+export default observer(UserForm);

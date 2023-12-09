@@ -25,7 +25,7 @@ const ReservationsTable = ({reservations, reservationInfo, onCancel}) => {
 
     if (!reservations.length) {
         return (
-            <div style={{color: "#850000"}}>Reservations not found!</div>
+            <div className={cl.resException} >Reservations not found!</div>
         )
     }
 

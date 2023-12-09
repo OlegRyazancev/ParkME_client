@@ -22,3 +22,9 @@
 span {
     background-color: transparent;
 }
+
+.resException {
+    color: #f65f5f;
+    font-size: 20px;
+    padding: 20px 0;
+}
