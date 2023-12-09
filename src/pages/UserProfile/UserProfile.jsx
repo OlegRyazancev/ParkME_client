@@ -14,6 +14,7 @@ import Modal from "../../components/UI/Modal/Modal";
 import ReservationInfo from "../../components/Reservation/ReservationInfo";
 import CarForm from "../../components/Car/CarForm";
 import {useNavigate} from "react-router-dom";
+import UserForm from "../../components/User/UserForm";
 
 const UserProfile = () => {
     const {store} = useContext(Context);
@@ -32,11 +33,13 @@ const UserProfile = () => {
     const [modalReservationInfo, setModalReservationInfo] = useState(false);
     const [modalCreateCar, setModalCreateCar] = useState(false);
     const [modalUpdateCar, setModalUpdateCar] = useState(false);
+    const [modalUpdateUser, setModalUpdateUser] = useState(false);
 
     const [validationMessage, setValidationMessage] = useState('');
 
     const navigate = useNavigate();
     const openModalCreateCar = () => setModalCreateCar(true);
+    const openModalUpdateUser = () => setModalUpdateUser(true);
     const toggleCars = () => setShowCars(!showCars);
     const toggleReservations = () => setShowReservations(!showReservations);
     const clearValidationMsg = () => setValidationMessage('');
@@ -82,7 +85,7 @@ const UserProfile = () => {
 
     const [updateCar] = useFetching(async (carData) => {
         try {
-            const response = await CarService.update(carData)
+            const response = await CarService.update(carData);
             setModalUpdateCar(false);
             setMessage("Car successfully updated!")
             setModalMessage(true)
@@ -94,7 +97,7 @@ const UserProfile = () => {
                         : car
                 ));
             });
-            setValidationMessage('')
+
         } catch (error) {
             const errorMessage =
                 error.response.data?.errors?.number || error.response.data?.message
@@ -117,6 +120,31 @@ const UserProfile = () => {
         } catch (error) {
             setModalMessage(true)
             setMessage(error.response.data.message)
+        }
+    })
+
+    const [updateUser] = useFetching(async (userData) => {
+        try {
+            console.log(store.user)
+            console.log(userData)
+            const response = await UserService.update(
+                userData.id,
+                userData.name,
+                userData.email,
+                userData.password
+            );
+            setModalUpdateUser(false);
+            setMessage("User successfully updated!");
+            setModalMessage(true);
+        } catch (error) {
+            const errorMessage =
+                error.response.data?.errors?.email
+                || error.response.data?.message
+                || error.response.data?.errors?.name
+                || error.response.data?.errors?.password
+            setValidationMessage(errorMessage);
+            console.log(error)
+            console.log(error.data)
         }
     })
 
@@ -151,20 +179,29 @@ const UserProfile = () => {
                    setVisible={setModalCreateCar}
                    onClose={clearValidationMsg}>
                 <CarForm onSubmit={createCar}
-                         validation={validationMessage}/>
+                         validation={validationMessage}
+                />
+            </Modal>
+            <Modal visible={modalUpdateUser}
+                   setVisible={setModalUpdateUser}
+                   onClose={clearValidationMsg}>
+                <UserForm onSubmit={updateUser}
+                          user={store.user}
+                          validation={validationMessage}
+                />
             </Modal>
             <hr className={cl.hrLine}/>
             <div className={cl.profileContainer}>
                 <div className={cl.userInfo}>
                     <p>
-                        <span className={cl.propName}>name:</span>
+                        <span className={cl.propName}>name: </span>
                         {user.name}
                     </p>
                     <p>
-                        <span className={cl.propName}>email:</span>
+                        <span className={cl.propName}>email: </span>
                         {user.email}
                     </p>
-                    <ActBtn label="edit"/>
+                    <ActBtn label="edit" action={openModalUpdateUser}/>
                 </div>
                 <div className={cl.userProps}>
                     <div className={cl.userCars}>
