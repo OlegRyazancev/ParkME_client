@@ -1,0 +1,22 @@
+.dateTimePickerContainer {
+    display: flex;
+    align-items: center;
+    width: 650px;
+}
+
+.dateTimePickerContainer span {
+    font: 900 30px "Inter Semi Bold", sans-serif;
+    color: white;
+    flex: 1;
+    text-align: right;
+    margin-right: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.dateTimePickerContainer input {
+    width: 350px;
+    text-align: center;
+    height: 40px;
+    font: 500 25px "Inter Semi Bold", sans-serif;
+    border-radius: 10px;
+}
