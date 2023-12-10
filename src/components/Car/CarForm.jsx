@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import ActBtn from "../UI/Button/ActBtn";
 import cl from "./Cars.module.css"
 
-const CarForm = ({onSubmit, validation, carId}) => {
+const CarForm = ({onSubmit, validation, carId, oldNumber}) => {
     const [carNumber, setCarNumber] = useState('');
-    const [buttonLabel, setButtonLabel] = useState(carId? 'edit': 'create')
+    const [buttonLabel, setButtonLabel] = useState(carId ? 'edit' : 'create')
 
 
     const handleSubmit = () => {
@@ -26,7 +26,7 @@ const CarForm = ({onSubmit, validation, carId}) => {
 
     return (
         <div className={cl.formContainer}>
-            <p className={cl.formHeader}>New car</p>
+            <p className={cl.formHeader}>{carId ? `Edit: ${oldNumber}` : "New car"}</p>
             <div className={cl.inputContainer}>
                 <span>Enter new car number: </span>
                 <input

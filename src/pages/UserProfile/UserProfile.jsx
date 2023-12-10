@@ -83,9 +83,10 @@ const UserProfile = () => {
             setModalMessage(true)
             const newCar = response.data;
             setCars((prevCars) => [...prevCars, newCar]);
+            setValidationMessage('');
         } catch (error) {
             const errorMessage =
-                error.response.data.errors.number || error.response.data.message
+                error.response.data?.errors?.number || error.response?.data?.message;
             setValidationMessage(errorMessage);
         }
     });
@@ -104,7 +105,6 @@ const UserProfile = () => {
                         : car
                 ));
             });
-
         } catch (error) {
             const errorMessage =
                 error.response.data?.errors?.number || error.response.data?.message

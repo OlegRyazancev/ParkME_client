@@ -74,12 +74,21 @@ const NewReservation = () => {
     useEffect(() => {
         fetchZones();
         fetchCarsByUserId(store.user.id);
+
+        const storedZone = localStorage.getItem('selectedZone');
+        const storedPlace = localStorage.getItem('selectedPlace');
+
+        if (storedZone) {
+            const storedZoneObj = JSON.parse(storedZone);
+            setSelectedZone(storedZoneObj);
+            fetchPlacesByZoneId(storedZoneObj.id);
+            setIsPlaceSelectDisabled(false);
+        }
+        if (storedPlace) {
+            const storedPlaceObj = JSON.parse(storedPlace);
+            setSelectedPlace(storedPlaceObj);
+        }
     }, []);
-
-    useEffect(() => {
-        setIsPlaceSelectDisabled(!selectedZone || !selectedZone.id);
-    }, [selectedZone]);
-
 
     const zoneOptions = useMemo(() => (
         <>
@@ -117,14 +126,17 @@ const NewReservation = () => {
     const handleZoneChange = async (zoneId) => {
         try {
             const zoneIdLong = parseInt(zoneId, 10);
-
             const selectedZone = zones.find((zone) => zone.id === zoneIdLong);
             setSelectedZone(selectedZone);
 
             if (selectedZone) {
                 await fetchPlacesByZoneId(selectedZone.id);
+                setIsPlaceSelectDisabled(false);
+                localStorage.setItem('selectedZone', JSON.stringify(selectedZone));
+                localStorage.removeItem('selectedPlace');
             } else {
                 setPlaces([]);
+                setIsPlaceSelectDisabled(true);
             }
         } catch (error) {
             console.error('Error handling zone change:', error);
@@ -135,6 +147,7 @@ const NewReservation = () => {
         const parsedPlaceId = parseInt(placeId, 10);
         const selectedPlace = places.find((place) => place.id === parsedPlaceId);
         setSelectedPlace(selectedPlace);
+        localStorage.setItem('selectedPlace', JSON.stringify(selectedPlace));
     };
     const handleCarChange = (carId) => {
         const parsedCarId = parseInt(carId, 10);
@@ -178,17 +191,22 @@ const NewReservation = () => {
         };
 
         createReservation(reservationData);
+        localStorage.removeItem("selectedPlace");
+        localStorage.removeItem("selectedZone");
+        setSelectedZone({});
+        setSelectedPlace({});
+        setSelectedCar({});
+        setSelectedTimeFrom('');
+        setSelectedTimeTo('');
     };
 
     return (
         <div className="App">
-            <Modal visible={modalMessage}
-                   setVisible={setModalMessage}>
+            <Modal visible={modalMessage} setVisible={setModalMessage}>
                 {message}
             </Modal>
             <PageHeader value={"New Reservation"}/>
             <div className={cl.newReservationContainer}>
-
                 <DateTimePicker
                     name={"Time from:"}
                     value={selectedTimeFrom}
@@ -203,6 +221,7 @@ const NewReservation = () => {
                     label={"Zone:"}
                     options={zoneOptions}
                     action={handleZoneChange}
+                    value={selectedZone?.id}
                 />
                 <br/>
                 <Select
@@ -210,6 +229,7 @@ const NewReservation = () => {
                     options={placeOptions}
                     action={handlePlaceChange}
                     isDisabled={isPlaceSelectDisabled}
+                    value={selectedPlace?.id}
                 />
                 <br/>
                 <Select

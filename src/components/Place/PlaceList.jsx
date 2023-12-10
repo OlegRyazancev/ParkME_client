@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import PlaceItem from "./PlaceItem";
 import cl from "./Place.module.css"
 
-const PlaceList = ({places}) => {
+const PlaceList = ({zone, places}) => {
     const [showNotFound, setShowNotFound] = useState(false);
     const sortedPlaces = places.slice().sort((a, b) => a.number - b.number);
 
@@ -27,7 +27,7 @@ const PlaceList = ({places}) => {
     return (
         <div className={cl.placeList}>
             {sortedPlaces.map((place) =>
-                <PlaceItem place={place} key={place.id}/>
+                <PlaceItem zone={zone} place={place} key={place.id}/>
             )}
         </div>
     )

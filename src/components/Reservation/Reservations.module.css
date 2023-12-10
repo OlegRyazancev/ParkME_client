@@ -20,10 +20,12 @@
 .infoContainer {
     background-color: transparent;
 }
+
 .infoContainer span {
     color: #7F8F96;
     padding-right: 10px;
 }
+
 span {
     background-color: transparent;
 }
@@ -32,4 +34,14 @@ span {
     color: #f65f5f;
     font-size: 20px;
     padding: 20px 0;
+}
+
+.filterSelect {
+    width: 175px;
+    text-align: center;
+    height: 30px;
+    font: 500 20px "Inter Semi Bold", sans-serif;
+    background-color: #a8a8a8;
+    border-radius: 10px;
+
 }

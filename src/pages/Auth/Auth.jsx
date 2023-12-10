@@ -74,42 +74,50 @@ const Auth = () => {
     );
 
     return (
-        <div className={cl.authContainer}>
-            <div className={cl.authForm}>
-                <h1 className={cl.authFormHeader}>{isSignUp ? "Sign up" : "Sign in"}</h1>
-                {renderNameInput()}
-                <input
-                    onChange={(e) => setUsername(e.target.value)}
-                    value={username}
-                    type="text"
-                    placeholder="Email"
-                />
-                <input
-                    onChange={(e) => setPassword(e.target.value)}
-                    value={password}
-                    type="password"
-                    placeholder="Password"
-                />
-                {renderPasswordConfirmationInput()}
-                <p style={{color: "#f65f5f"}}>{errorMessage}</p>
-                <button className={cl.signBtn} onClick={isSignUp ? handleRegistration : handleLogin}>
-                    {isSignUp ? "Sign up" : "Sign in"}
-                </button>
-                <div className={cl.authLink}>
-                    <p>{isSignUp ? "Already have an account?" : "Don't have an account?"} </p>
-                    <button className={cl.lnk} onClick={toggleMode}>
-                        {isSignUp ? "Sign in" : "Sign up"}
-                    </button>
-                </div>
-            </div>
+        <div className="App">
 
-            <div className={cl.welcomeInfo}>
-                <p className={cl.welcomeHeader}>Welcome to</p>
-                <img src={appLogo} alt="auth_logo" style={{backgroundColor: "transparent"}}/>
-                <p className={cl.welcomeDesc}>Say goodbye to the stress of finding a spot with our intuitive reservation
-                    system</p>
-                <p className={cl.welcomeDesc}>Start your journey with ParkMe and make parking a breeze!</p>
-                <img src={authLogo} alt="auth_logo" className={cl.img}/>
+
+            <div className={cl.authContainer}>
+                <div className={cl.authForm}>
+                    <h1 className={cl.authFormHeader}>{isSignUp ? "Sign up" : "Sign in"}</h1>
+                    {renderNameInput()}
+                    <input
+                        onChange={(e) => setUsername(e.target.value)}
+                        value={username}
+                        type="text"
+                        placeholder="Email"
+                    />
+                    <input
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                        type="password"
+                        placeholder="Password"
+                    />
+                    {renderPasswordConfirmationInput()}
+                    <p style={{color: "#f65f5f"}}>{errorMessage}</p>
+                    <button className={cl.signBtn}
+                            onClick={isSignUp ? handleRegistration : handleLogin}>
+                        {isSignUp ? "Sign up" : "Sign in"}
+                    </button>
+                    <div className={cl.authLink}>
+                        <p>{isSignUp ? "Already have an account?" : "Don't have an account?"} </p>
+                        <button className={cl.lnk} onClick={toggleMode}>
+                            {isSignUp ? "Sign in" : "Sign up"}
+                        </button>
+                    </div>
+                </div>
+
+                <div className={cl.welcomeInfo}>
+                    <p className={cl.welcomeHeader}>Welcome to</p>
+                    <img src={appLogo} alt="auth_logo"
+                         style={{backgroundColor: "transparent"}}/>
+                    <p className={cl.welcomeDesc}>Say goodbye to the stress of
+                        finding a spot with our intuitive reservation
+                        system</p>
+                    <p className={cl.welcomeDesc}>Start your journey with ParkMe
+                        and make parking a breeze!</p>
+                    <img src={authLogo} alt="auth_logo" className={cl.img}/>
+                </div>
             </div>
         </div>
     );

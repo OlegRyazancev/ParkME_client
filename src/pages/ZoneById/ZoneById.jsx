@@ -15,9 +15,15 @@ const ZoneById = () => {
         number: null,
         places: []
     });
+    const [zoneToSend, setZoneToSend] = useState();
     const [fetchZoneById, isLoading] = useFetching(async (id) => {
         const response = await ZoneService.getById(id);
+
         setZone(response.data);
+        setZoneToSend({
+            id: response.data.id,
+            number: response.data.number
+        });
     })
 
     useEffect(() => {
@@ -30,7 +36,7 @@ const ZoneById = () => {
             {isLoading && <Loader/>}
             <div className={cl.placesContainer}>
                 Places
-                <PlaceList places={zone.places}/>
+                <PlaceList zone={zoneToSend} places={zone.places}/>
             </div>
         </div>
     )

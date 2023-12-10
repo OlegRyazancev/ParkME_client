@@ -58,6 +58,7 @@ const CarsTable = ({cars, onDelete, onUpdate, validationMsg, onModalClose}) => {
                     onSubmit={onUpdate}
                     validation={validationMsg}
                     carId={selectedCar.id}
+                    oldNumber={selectedCar.number}
                 />
             </Modal>
         </>

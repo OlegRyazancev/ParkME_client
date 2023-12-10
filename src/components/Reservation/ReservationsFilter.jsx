@@ -1,9 +1,10 @@
 import React from 'react';
+import cl from "./Reservations.module.css"
 
 const ReservationsFilter = ({filter, setFilter}) => {
     return (
         <div>
-            <select
+            <select className={cl.filterSelect}
                 value={filter.sort}
                 onChange={(event) => setFilter({
                     ...filter,
