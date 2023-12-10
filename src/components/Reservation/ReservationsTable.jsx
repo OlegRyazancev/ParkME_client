@@ -2,7 +2,7 @@ import React from 'react';
 import cl from "./Reservations.module.css";
 import ActBtn from "../UI/Button/ActBtn";
 
-const ReservationsTable = ({reservations, reservationInfo, onCancel}) => {
+const ReservationsTable = ({reservations, reservationInfo, onCancel, filter}) => {
 
     const handleCancel = (id) => {
         onCancel(id);
@@ -30,6 +30,8 @@ const ReservationsTable = ({reservations, reservationInfo, onCancel}) => {
     }
 
     return (
+        <div>
+            {filter}
         <table>
             <tbody>
             {reservations.map((reservation) => (
@@ -62,6 +64,7 @@ const ReservationsTable = ({reservations, reservationInfo, onCancel}) => {
             ))}
             </tbody>
         </table>
+        </div>
     );
 };
 

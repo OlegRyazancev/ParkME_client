@@ -8,4 +8,8 @@ export default class ReservationService {
     static async cancel(id) {
         return await $api.put(`/reservations/${id}`)
     };
+
+    static async create(reservationData, userId) {
+        return await $api.post(`/users/${userId}/reservations`, reservationData)
+    }
 }

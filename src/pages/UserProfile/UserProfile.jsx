@@ -15,12 +15,16 @@ import ReservationInfo from "../../components/Reservation/ReservationInfo";
 import CarForm from "../../components/Car/CarForm";
 import {useNavigate} from "react-router-dom";
 import UserForm from "../../components/User/UserForm";
+import {useReservations} from "../../hooks/useReservations";
+import ReservationsFilter
+    from "../../components/Reservation/ReservationsFilter";
 
 const UserProfile = () => {
     const {store} = useContext(Context);
     const [user, setUser] = useState({})
     const [cars, setCars] = useState([]);
     const [reservations, setReservations] = useState([]);
+    const [filter, setFilter] = useState({sort: ''});
 
     const [showCars, setShowCars] = useState(false);
     const [showReservations, setShowReservations] = useState(false);
@@ -38,6 +42,8 @@ const UserProfile = () => {
     const [validationMessage, setValidationMessage] = useState('');
 
     const navigate = useNavigate();
+
+    const sortedReservations = useReservations(reservations, filter.sort);
     const openModalCreateCar = () => setModalCreateCar(true);
     const openModalUpdateUser = () => setModalUpdateUser(true);
     const toggleCars = () => setShowCars(!showCars);
@@ -240,10 +246,12 @@ const UserProfile = () => {
                                     <CSSTransition classNames="slide"
                                                    timeout={300}>
                                         <ReservationsTable
-                                            reservations={reservations}
+                                            reservations={sortedReservations}
                                             reservationInfo={reservationInfo}
                                             onCancel={cancelReservation}
-                                        />
+                                            filter={<ReservationsFilter
+                                                filter={filter}
+                                                setFilter={setFilter}/>}/>
                                     </CSSTransition>
                                 )}
                             </TransitionGroup>

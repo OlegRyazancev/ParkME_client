@@ -11,14 +11,19 @@
 }
 
 .resHeader {
-    text-align: center;
-    font-weight: 1200;
+    text-align: left;
+    padding: 10px 0;
+    color: #7F8F96;
+    font-size: 30px;
 }
 
 .infoContainer {
     background-color: transparent;
 }
-
+.infoContainer span {
+    color: #7F8F96;
+    padding-right: 10px;
+}
 span {
     background-color: transparent;
 }
