@@ -1,9 +1,10 @@
 import React from 'react';
+import cl from "./Select.module.css"
 
 const Select = ({label, value, options, action, isDisabled}) => {
     return (
-        <div>
-            {label}
+        <div className={cl.selectContainer}>
+            <span>{label}</span>
             <select
                 onChange={(e) => action(e.target.value)}
                 disabled={isDisabled}

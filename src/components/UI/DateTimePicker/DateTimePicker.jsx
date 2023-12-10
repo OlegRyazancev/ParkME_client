@@ -1,9 +1,10 @@
 import React from 'react';
+import cl from "./DateTimePicker.module.css"
 
 const DateTimePicker = ({ name, value, action }) => {
     return (
-        <div>
-            {name}
+        <div className={cl.dateTimePickerContainer}>
+            <span>{name}</span>
             <input
                 type="datetime-local"
                 value={value}

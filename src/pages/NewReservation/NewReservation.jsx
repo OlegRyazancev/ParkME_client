@@ -10,6 +10,7 @@ import {format} from "date-fns";
 import DateTimePicker from "../../components/UI/DateTimePicker/DateTimePicker";
 import Select from "../../components/UI/Select/Select";
 import PageHeader from "../../components/UI/PageHeader/PageHeader";
+import cl from "./NewReservation.module.css"
 
 
 const NewReservation = () => {
@@ -82,7 +83,7 @@ const NewReservation = () => {
 
     const zoneOptions = useMemo(() => (
         <>
-            <option value="">Select Zone:</option>
+            <option value="">Select Zone</option>
             {zones.map((zone) => (
                 <option key={zone.id} value={zone.id}>
                     {zone.number}
@@ -93,7 +94,7 @@ const NewReservation = () => {
 
     const placeOptions = useMemo(() => (
         <>
-            <option value="">Select Place:</option>
+            <option value="">Select Place</option>
             {places.map((place) => (
                 <option key={place.id} value={place.id}>
                     {place.number} - {place.status}
@@ -104,7 +105,7 @@ const NewReservation = () => {
 
     const carsOptions = useMemo(() => (
         <>
-            <option value="">Select Car:</option>
+            <option value="">Select Car</option>
             {cars.map((car) => (
                 <option key={car.id} value={car.id}>
                     {car.number}
@@ -181,42 +182,43 @@ const NewReservation = () => {
 
     return (
         <div className="App">
-            <div>
             <Modal visible={modalMessage}
                    setVisible={setModalMessage}>
                 {message}
             </Modal>
             <PageHeader value={"New Reservation"}/>
+            <div className={cl.newReservationContainer}>
+
                 <DateTimePicker
-                    name={"Time from"}
+                    name={"Time from:"}
                     value={selectedTimeFrom}
                     action={handleTimeFrom}
                 />
                 <DateTimePicker
-                    name={"Time to"}
+                    name={"Time to:"}
                     value={selectedTimeTo}
                     action={handleTimeTo}
                 />
                 <Select
-                    label={"Zone: "}
+                    label={"Zone:"}
                     options={zoneOptions}
                     action={handleZoneChange}
                 />
                 <br/>
                 <Select
-                    label={"Place: "}
+                    label={"Place:"}
                     options={placeOptions}
                     action={handlePlaceChange}
                     isDisabled={isPlaceSelectDisabled}
                 />
                 <br/>
                 <Select
-                    label={"Car: "}
+                    label={"Car:"}
                     options={carsOptions}
                     action={handleCarChange}
                 />
                 <br/>
-                <p>{validation}</p>
+                <p className={cl.validationMsg}>{validation}</p>
                 <ActBtn action={handleSubmit} label="create"/>
             </div>
         </div>

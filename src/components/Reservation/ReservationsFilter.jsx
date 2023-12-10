@@ -3,7 +3,7 @@ import React from 'react';
 const ReservationsFilter = ({filter, setFilter}) => {
     return (
         <div>
-            <select style={{background: "white"}}
+            <select
                 value={filter.sort}
                 onChange={(event) => setFilter({
                     ...filter,
