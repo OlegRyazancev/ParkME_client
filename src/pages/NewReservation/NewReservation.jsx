@@ -9,6 +9,7 @@ import Modal from "../../components/UI/Modal/Modal";
 import {format} from "date-fns";
 import DateTimePicker from "../../components/UI/DateTimePicker/DateTimePicker";
 import Select from "../../components/UI/Select/Select";
+import PageHeader from "../../components/UI/PageHeader/PageHeader";
 
 
 const NewReservation = () => {
@@ -179,13 +180,13 @@ const NewReservation = () => {
     };
 
     return (
-        <div>
+        <div className="App">
+            <div>
             <Modal visible={modalMessage}
                    setVisible={setModalMessage}>
                 {message}
             </Modal>
-            <div>
-                <p>Make Reservation</p>
+            <PageHeader value={"New Reservation"}/>
                 <DateTimePicker
                     name={"Time from"}
                     value={selectedTimeFrom}

@@ -18,6 +18,7 @@ import UserForm from "../../components/User/UserForm";
 import {useReservations} from "../../hooks/useReservations";
 import ReservationsFilter
     from "../../components/Reservation/ReservationsFilter";
+import PageHeader from "../../components/UI/PageHeader/PageHeader";
 
 const UserProfile = () => {
     const {store} = useContext(Context);
@@ -173,7 +174,6 @@ const UserProfile = () => {
 
     return (
         <div className="App">
-            <div className={cl.profileHeader}>Profile</div>
             <Modal visible={modalMessage}
                    setVisible={setModalMessage}>
                 {message}
@@ -197,7 +197,7 @@ const UserProfile = () => {
                           validation={validationMessage}
                 />
             </Modal>
-            <hr className={cl.hrLine}/>
+            <PageHeader value={"Profile"}/>
             <div className={cl.profileContainer}>
                 <div className={cl.userInfo}>
                     <p>

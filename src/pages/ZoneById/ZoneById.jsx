@@ -6,6 +6,7 @@ import Loader from "../../components/UI/Loader/Loader";
 import {observer} from "mobx-react-lite";
 import cl from "./ZoneById.module.css"
 import PlaceList from "../../components/Place/PlaceList";
+import PageHeader from "../../components/UI/PageHeader/PageHeader";
 
 const ZoneById = () => {
     const params = useParams();
@@ -25,8 +26,7 @@ const ZoneById = () => {
 
     return (
         <div className="App">
-            <div className={cl.zoneByIdHeader}>Zone {zone.number}</div>
-            <hr className={cl.hrLine}/>
+            <PageHeader value={`Zone ${zone.number}`}/>
             {isLoading && <Loader/>}
             <div className={cl.placesContainer}>
                 Places
