@@ -1,0 +1,30 @@
+.welcomeContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 70vh;
+    background: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.welcomeContainer p {
+    font: 900 50px "Inter Semi Bold", sans-serif;
+    color: white;
+}
+
+.welcomeContainer button {
+    margin: 20px;
+    width: 350px;
+    height: 75px;
+    font: 900 25px "Inter Semi Bold", sans-serif;
+    border-radius: 15px;
+    background-color: #021a2f;
+    color: #afafaf;
+    border: none;
+    cursor: pointer;
+}
+
+.welcomeContainer button:hover {
+    background-color: #042b4d;
+}

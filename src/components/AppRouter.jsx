@@ -18,7 +18,7 @@ const AppRouter = () => {
                         key={route.path}
                     />
                 )}
-                <Route path="*" element={<Navigate to="/zones"/>}/>
+                <Route path="*" element={<Navigate to="/welcome"/>}/>
             </Routes>
             :
             <Routes>
