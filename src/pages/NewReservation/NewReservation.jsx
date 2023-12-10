@@ -7,7 +7,8 @@ import ActBtn from "../../components/UI/Button/ActBtn";
 import ReservationService from "../../service/ReservationService";
 import Modal from "../../components/UI/Modal/Modal";
 import {format} from "date-fns";
-import {da} from "date-fns/locale";
+import DateTimePicker from "../../components/UI/DateTimePicker/DateTimePicker";
+import Select from "../../components/UI/Select/Select";
 
 
 const NewReservation = () => {
@@ -184,53 +185,35 @@ const NewReservation = () => {
                 {message}
             </Modal>
             <div>
-                <h2>Make Reservation</h2>
-                <label>
-                    Time from:
-                    <input
-                        style={{width: '500px'}}
-                        type="datetime-local"
-                        value={selectedTimeFrom}
-                        min={new Date().toISOString().slice(0, 16)}
-                        max={'2050-01-01T00:00'}
-                        onChange={(e) => handleTimeFrom(e.target.value)}
-                    />
-                </label>
-                <label>
-                    Time to:
-                    <input
-                        style={{width: '500px'}}
-                        type="datetime-local"
-                        value={selectedTimeTo}
-                        min={new Date().toISOString().slice(0, 18)}
-                        max={'2050-01-01T00:00'}
-                        onChange={(e) => handleTimeTo(e.target.value)}
-                    />
-                </label>
-
-                <label>
-                    Zone:
-                    <select onChange={(e) => handleZoneChange(e.target.value)}>
-                        {zoneOptions}
-                    </select>
-                </label>
+                <p>Make Reservation</p>
+                <DateTimePicker
+                    name={"Time from"}
+                    value={selectedTimeFrom}
+                    action={handleTimeFrom}
+                />
+                <DateTimePicker
+                    name={"Time to"}
+                    value={selectedTimeTo}
+                    action={handleTimeTo}
+                />
+                <Select
+                    label={"Zone: "}
+                    options={zoneOptions}
+                    action={handleZoneChange}
+                />
                 <br/>
-                <label>
-                    Place:
-                    <select
-                        onChange={(e) => handlePlaceChange(e.target.value)}
-                        disabled={isPlaceSelectDisabled}
-                    >
-                        {placeOptions}
-                    </select>
-                </label>
+                <Select
+                    label={"Place: "}
+                    options={placeOptions}
+                    action={handlePlaceChange}
+                    isDisabled={isPlaceSelectDisabled}
+                />
                 <br/>
-                <label>
-                    Car:
-                    <select onChange={(e) => handleCarChange(e.target.value)}>
-                        {carsOptions}
-                    </select>
-                </label>
+                <Select
+                    label={"Car: "}
+                    options={carsOptions}
+                    action={handleCarChange}
+                />
                 <br/>
                 <p>{validation}</p>
                 <ActBtn action={handleSubmit} label="create"/>
