@@ -4,25 +4,25 @@ import ActBtn from "../UI/Button/ActBtn";
 import CarForm from "./CarForm";
 import Modal from "../UI/Modal/Modal";
 
-const CarsTable = ({cars, onDelete, onUpdate, validationMsg, onModalClose}) => {
+const CarsTable = ({
+                       cars,
+                       onDelete,
+                       onUpdate,
+                       validationMsg,
+                       onModalClose,
+                       visible,
+                       setVisible
+                   }) => {
 
     const [selectedCar, setSelectedCar] = useState({});
-    const [modalUpdateCar, setModalUpdateCar] = useState(false);
-    const [localValidationMsg, setLocalValidationMsg] = useState(validationMsg);
 
     const handleDelete = (id) => {
         onDelete(id);
     }
     const handleUpdate = (car) => {
         setSelectedCar(car);
-        setModalUpdateCar(true)
+        setVisible(true)
     }
-    const handleCloseModal = () => {
-        setModalUpdateCar(false);
-        setLocalValidationMsg('');
-        onModalClose();
-    };
-
 
     if (!cars.length) {
         return (
@@ -51,9 +51,9 @@ const CarsTable = ({cars, onDelete, onUpdate, validationMsg, onModalClose}) => {
                 ))}
                 </tbody>
             </table>
-            <Modal visible={modalUpdateCar}
-                   setVisible={setModalUpdateCar}
-                   onClose={handleCloseModal}>
+            <Modal visible={visible}
+                   setVisible={setVisible}
+                   onClose={onModalClose}>
                 <CarForm
                     onSubmit={onUpdate}
                     validation={validationMsg}

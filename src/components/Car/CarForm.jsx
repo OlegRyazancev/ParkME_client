@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ActBtn from "../UI/Button/ActBtn";
 import cl from "./Cars.module.css"
 
@@ -6,6 +6,9 @@ const CarForm = ({onSubmit, validation, carId, oldNumber}) => {
     const [carNumber, setCarNumber] = useState('');
     const [buttonLabel, setButtonLabel] = useState(carId ? 'edit' : 'create')
 
+    useEffect(() => {
+        setButtonLabel(carId ? 'save' : 'create');
+    }, [carId]);
 
     const handleSubmit = () => {
         if (carId) {
@@ -13,14 +16,11 @@ const CarForm = ({onSubmit, validation, carId, oldNumber}) => {
                 id: carId,
                 number: carNumber
             });
-            setButtonLabel('save');
         } else {
             onSubmit({
                 number: carNumber
             });
-            setButtonLabel('create');
         }
-
         setCarNumber('');
     };
 

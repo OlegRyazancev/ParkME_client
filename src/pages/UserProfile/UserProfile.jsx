@@ -105,6 +105,7 @@ const UserProfile = () => {
                         : car
                 ));
             });
+            setValidationMessage('');
         } catch (error) {
             const errorMessage =
                 error.response.data?.errors?.number || error.response.data?.message
@@ -225,6 +226,8 @@ const UserProfile = () => {
                                             cars={cars}
                                             onDelete={deleteCar}
                                             onUpdate={updateCar}
+                                            visible={modalUpdateCar}
+                                            setVisible={setModalUpdateCar}
                                             validationMsg={validationMessage}
                                             onModalClose={clearValidationMsg}
                                         />
