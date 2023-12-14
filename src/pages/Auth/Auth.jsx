@@ -75,8 +75,6 @@ const Auth = () => {
 
     return (
         <div className="App">
-
-
             <div className={cl.authContainer}>
                 <div className={cl.authForm}>
                     <h1 className={cl.authFormHeader}>{isSignUp ? "Sign up" : "Sign in"}</h1>
@@ -94,7 +92,7 @@ const Auth = () => {
                         placeholder="Password"
                     />
                     {renderPasswordConfirmationInput()}
-                    <p style={{color: "#f65f5f"}}>{errorMessage}</p>
+                    <p style={{color: "#b20000"}}>{errorMessage}</p>
                     <button className={cl.signBtn}
                             onClick={isSignUp ? handleRegistration : handleLogin}>
                         {isSignUp ? "Sign up" : "Sign in"}
@@ -109,8 +107,7 @@ const Auth = () => {
 
                 <div className={cl.welcomeInfo}>
                     <p className={cl.welcomeHeader}>Welcome to</p>
-                    <img src={appLogo} alt="auth_logo"
-                         style={{backgroundColor: "transparent"}}/>
+                    <img src={appLogo} alt="auth_logo" className={cl.appLogo}/>
                     <p className={cl.welcomeDesc}>Say goodbye to the stress of
                         finding a spot with our intuitive reservation
                         system</p>
