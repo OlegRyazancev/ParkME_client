@@ -5,6 +5,7 @@ import {useFetching} from "../../hooks/useFetching";
 import UserService from "../../service/UserService";
 import Loader from "../../components/UI/Loader/Loader";
 import cl from "./Welcome.module.css"
+import welcBack from "../../images/welcome_background.png";
 
 const Welcome = () => {
     const navigate = useNavigate();
@@ -25,10 +26,14 @@ const Welcome = () => {
                 {isLoading && <Loader/>}
                 <p>Welcome back, {user?.name}!</p>
                 <div>
-                    <button onClick={() => navigate("/new-reservation")}>Make a reservation</button>
-                    <button onClick={()=>navigate("/zones")}>Check places</button>
+                    <button onClick={() => navigate("/new-reservation")}>Make a
+                        reservation
+                    </button>
+                    <button onClick={() => navigate("/zones")}>Check places
+                    </button>
                 </div>
             </div>
+            <img src={welcBack} alt="logo" className={cl.welcomeBackground}/>
         </div>
     );
 };

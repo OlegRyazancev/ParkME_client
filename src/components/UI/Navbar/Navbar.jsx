@@ -10,7 +10,6 @@ const Navbar = () => {
     return (
         <div className={cl.navbar}>
             <img src={logo} alt="logo" className={cl.navbar__logo}/>
-            {/*<div className={cl.lnkContainer}>*/}
                 <Link className={cl.navbar__links} to="/new-reservation">
                     RESERVE
                 </Link>
@@ -30,7 +29,6 @@ const Navbar = () => {
                       onClick={() => store.logout()}>
                     LOGOUT
                 </button>
-            {/*</div>*/}
         </div>
     );
 };
