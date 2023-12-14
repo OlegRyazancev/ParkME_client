@@ -16,11 +16,13 @@
 
 .navbar__links {
     color: #7F8F96;
-    font: 900 25px "Inter Semi Bold", sans-serif;
+    font-size: 25px;
+    font-weight: 900;
     text-decoration: none;
-    margin: 20px;
+    margin: 25px;
     transition: color 0.3s ease, font-size 0.3s ease;
     background-color: transparent;
+    border: none;
 }
 
 .navbar__links:hover {
@@ -28,25 +30,7 @@
     font-size: 28px;
     background-color: transparent;
 }
-
-.btnContainer {
-    display: flex;
-    align-items: center;
-    background-color: transparent;
-}
-
-.btn {
-    width: 80px;
-    height: 30px;
-    border: #2D2D2D;
-    font: 800 15px "Inter Semi Bold", sans-serif;
-    background: #021a2f;
-    cursor: pointer;
-    border-radius: 5px;
-    color: #afafaf;
-    transition: color 0.3s ease;
-}
-
-.btn:hover {
-    background-color: #042b4d;
-}
+/*.lnkContainer{*/
+/*    width: 100%;*/
+/*    margin-left: 20px;*/
+/*}*/

@@ -10,7 +10,7 @@ const Navbar = () => {
     return (
         <div className={cl.navbar}>
             <img src={logo} alt="logo" className={cl.navbar__logo}/>
-            <div className={cl.btnContainer}>
+            {/*<div className={cl.lnkContainer}>*/}
                 <Link className={cl.navbar__links} to="/new-reservation">
                     RESERVE
                 </Link>
@@ -26,11 +26,11 @@ const Navbar = () => {
                 <Link className={cl.navbar__links} to="/about">
                     ABOUT
                 </Link>
-                <button className={cl.btn}
-                        onClick={() => store.logout()}>
+                <button className={cl.navbar__links}
+                      onClick={() => store.logout()}>
                     LOGOUT
                 </button>
-            </div>
+            {/*</div>*/}
         </div>
     );
 };
