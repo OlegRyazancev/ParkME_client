@@ -1,8 +1,7 @@
 import React from 'react';
 import cl from "./Reservations.module.css";
-import ActBtn from "../UI/Button/ActBtn";
 
-const ReservationsTable = ({reservations, reservationInfo, onCancel, filter}) => {
+const ReservationsTable = ({reservations, onCancel, filter}) => {
 
     const handleCancel = (id) => {
         onCancel(id);
@@ -32,38 +31,47 @@ const ReservationsTable = ({reservations, reservationInfo, onCancel, filter}) =>
     return (
         <div>
             {filter}
-        <table>
-            <tbody>
-            {reservations.map((reservation) => (
-                <tr key={reservation.id}>
-                    {(reservation.status === 'ACTIVE' || reservation.status === 'PLANNED')
-                        ?
-                        <>
-                            <td>
-                                <ActBtn label="cancel"
-                                        action={() => handleCancel(reservation.id)}/>
-                            </td>
-                            <td>
-                                <ActBtn label="edit"/>
-                            </td>
-                        </>
-                        :
-                        <>
-                            <td></td>
-                            <td></td>
-                        </>
-                    }
-                    <td className={cl.timeRange}
-                        onClick={() => reservationInfo(reservation)}>
-                        {reservation.timeFrom} - {reservation.timeTo}
-                    </td>
-                    <td style={{color: getStatusColor(reservation.status)}}>
-                        {reservation.status}
-                    </td>
+            <table>
+                <thead>
+                <tr>
+                    <th>Time From</th>
+                    <th>Time To</th>
+                    <th>Zone</th>
+                    <th>Place</th>
+                    <th>Car</th>
+                    <th>Status</th>
+
                 </tr>
-            ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {reservations.map((reservation, index) => (
+                    <tr key={index}>
+                        <td>{reservation.timeFrom}</td>
+                        <td>{reservation.timeTo}</td>
+                        <td>{reservation.zone.number}</td>
+                        <td>{reservation.place.number}</td>
+                        <td>{reservation.car.number}</td>
+                        <td style={{color: getStatusColor(reservation.status)}}>{reservation.status}</td>
+                        {(reservation.status === 'ACTIVE' || reservation.status === 'PLANNED')
+                            ?
+                            <>
+                                <td>
+                                    <button>Edit</button>
+                                </td>
+                                <td>
+                                    <button onClick={() => handleCancel(reservation.id)}>Cancel</button>
+                                </td>
+                            </>
+                            :
+                            <>
+                                <td></td>
+                                <td></td>
+                            </>
+                        }
+                    </tr>
+                ))}
+                </tbody>
+            </table>
         </div>
     );
 };

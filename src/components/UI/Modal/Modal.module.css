@@ -12,10 +12,10 @@
 .modalContent{
     padding: 25px;
     background: #002839;
-    opacity: 0.8;
     border-radius: 16px;
     min-width: 250px;
-    font: 900 20px "Inter Semi Bold", sans-serif;
+    font-size: 20px;
+    font-weight: 600;
     color: white;
 }
 

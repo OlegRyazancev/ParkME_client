@@ -2,16 +2,10 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../index";
 import {useFetching} from "../../hooks/useFetching";
 import CarService from "../../service/CarService";
-import {observer} from "mobx-react-lite";
 import ReservationService from "../../service/ReservationService";
 import cl from "./UserProfile.module.css"
 import UserService from "../../service/UserService";
-import ReservationsTable from "../../components/Reservation/ReservationsTable";
-import CarsTable from "../../components/Car/CarsTable";
-import ActBtn from "../../components/UI/Button/ActBtn"
-import {CSSTransition, TransitionGroup} from "react-transition-group";
 import Modal from "../../components/UI/Modal/Modal";
-import ReservationInfo from "../../components/Reservation/ReservationInfo";
 import CarForm from "../../components/Car/CarForm";
 import {useNavigate} from "react-router-dom";
 import UserForm from "../../components/User/UserForm";
@@ -19,6 +13,8 @@ import {useReservations} from "../../hooks/useReservations";
 import ReservationsFilter
     from "../../components/Reservation/ReservationsFilter";
 import PageHeader from "../../components/UI/PageHeader/PageHeader";
+import ReservationsTable from "../../components/Reservation/ReservationsTable";
+
 
 const UserProfile = () => {
     const {store} = useContext(Context);
@@ -27,15 +23,11 @@ const UserProfile = () => {
     const [reservations, setReservations] = useState([]);
     const [filter, setFilter] = useState({sort: ''});
 
-    const [showCars, setShowCars] = useState(false);
-    const [showReservations, setShowReservations] = useState(false);
-
     const [message, setMessage] = useState('');
 
-    const [reservationData, setReservationData] = useState({});
-
     const [modalMessage, setModalMessage] = useState(false);
-    const [modalReservationInfo, setModalReservationInfo] = useState(false);
+
+    // const [modalUpdateReservation, setModalUpdateReservation] = useState(false);
     const [modalCreateCar, setModalCreateCar] = useState(false);
     const [modalUpdateCar, setModalUpdateCar] = useState(false);
     const [modalUpdateUser, setModalUpdateUser] = useState(false);
@@ -43,13 +35,12 @@ const UserProfile = () => {
     const [validationMessage, setValidationMessage] = useState('');
 
     const navigate = useNavigate();
+    const openModalCreateCar = () => setModalCreateCar(true);
+    const openModalUpdateCar = () => setModalUpdateCar(true);
+    const openModalUpdateUser = () => setModalUpdateUser(true);
+    const clearValidationMsg = () => setValidationMessage('');
 
     const sortedReservations = useReservations(reservations, filter.sort);
-    const openModalCreateCar = () => setModalCreateCar(true);
-    const openModalUpdateUser = () => setModalUpdateUser(true);
-    const toggleCars = () => setShowCars(!showCars);
-    const toggleReservations = () => setShowReservations(!showReservations);
-    const clearValidationMsg = () => setValidationMessage('');
 
     const [fetchUser] = useFetching(async (id) => {
         setUser((await UserService.getById(id)).data);
@@ -157,21 +148,11 @@ const UserProfile = () => {
         }
     })
 
-    const reservationInfo = (reservation) => {
-        setModalReservationInfo(true);
-        setReservationData(reservation)
-    }
-
     useEffect(() => {
         fetchUser(store.user.id)
-        if (showCars) {
-            fetchCars(user.id)
-        }
-        if (showReservations) {
-            fetchReservations(user.id)
-        }
-    }, [showCars, showReservations])
-
+        fetchCars(store.user.id)
+        fetchReservations(store.user.id)
+    }, []);
 
     return (
         <div className="App">
@@ -179,14 +160,17 @@ const UserProfile = () => {
                    setVisible={setModalMessage}>
                 {message}
             </Modal>
-            <Modal visible={modalReservationInfo}
-                   setVisible={setModalReservationInfo}>
-                <ReservationInfo reservation={reservationData}/>
-            </Modal>
             <Modal visible={modalCreateCar}
                    setVisible={setModalCreateCar}
                    onClose={clearValidationMsg}>
                 <CarForm onSubmit={createCar}
+                         validation={validationMessage}
+                />
+            </Modal>
+            <Modal visible={modalUpdateCar}
+                   setVisible={setModalUpdateCar}
+                   onClose={clearValidationMsg}>
+                <CarForm onSubmit={updateCar}
                          validation={validationMessage}
                 />
             </Modal>
@@ -200,65 +184,69 @@ const UserProfile = () => {
             </Modal>
             <PageHeader value={"Profile"}/>
             <div className={cl.profileContainer}>
-                <div className={cl.userInfo}>
-                    <p>
-                        <span className={cl.propName}>name: </span>
-                        {user.name}
-                    </p>
-                    <p>
-                        <span className={cl.propName}>email: </span>
-                        {user.email}
-                    </p>
-                    <ActBtn label="edit" action={openModalUpdateUser}/>
-                </div>
-                <div className={cl.userProps}>
-                    <div className={cl.userCars}>
-                        <p className={cl.propName} onClick={toggleCars}>
-                            cars
+                <div className={cl.leftContainer}>
+                    <div className={cl.leftPropsContainer}>
+                        <p className={cl.propHeader}>User Info</p>
+                        <p>
+                            <span
+                                className={cl.propName}>name: </span> {user.name}
                         </p>
-                        <ActBtn label="add" action={openModalCreateCar}/>
-                        <div className="slide-container">
-                            <TransitionGroup>
-                                {showCars && (
-                                    <CSSTransition classNames="slide"
-                                                   timeout={300}>
-                                        <CarsTable
-                                            cars={cars}
-                                            onDelete={deleteCar}
-                                            onUpdate={updateCar}
-                                            visible={modalUpdateCar}
-                                            setVisible={setModalUpdateCar}
-                                            validationMsg={validationMessage}
-                                            onModalClose={clearValidationMsg}
-                                        />
-                                    </CSSTransition>
-                                )}
-                            </TransitionGroup>
-                        </div>
+                        <p>
+                            <span
+                                className={cl.propName}>email: </span> {user.email}
+                        </p>
                     </div>
+                    <button onClick={openModalUpdateUser}>Edit</button>
+                    <div className={cl.leftPropsContainer}>
+                        <p className={cl.propHeader}>Cars</p>
+                        {cars.map((car) => (
+                            <div key={car.id} className={cl.carsContainer}>
+                                <div className={cl.carItem}>
+                                    <p>
+                                        <span
+                                            className={cl.propName}>number: </span>
+                                        {car.number}
+                                    </p>
+                                    <p>
+                                        <span
+                                            className={cl.propName}>type: </span>
+                                        {car.type}
+                                    </p>
+                                </div>
+                                <div>
+                                    <button onClick={openModalUpdateCar}>Edit
+                                    </button>
+                                    <button
+                                        onClick={() => deleteCar(car.id)}>Delete
+                                    </button>
+                                </div>
 
-                    <div className={cl.userReservations}>
-                        <p className={cl.propName} onClick={toggleReservations}>
-                            reservations
-                        </p>
-                        <ActBtn label="create"
-                                action={() => navigate('/new-reservation')}/>
-                        <div className="slide-container">
-                            <TransitionGroup>
-                                {showReservations && (
-                                    <CSSTransition classNames="slide"
-                                                   timeout={300}>
-                                        <ReservationsTable
-                                            reservations={sortedReservations}
-                                            reservationInfo={reservationInfo}
-                                            onCancel={cancelReservation}
-                                            filter={<ReservationsFilter
-                                                filter={filter}
-                                                setFilter={setFilter}/>}/>
-                                    </CSSTransition>
-                                )}
-                            </TransitionGroup>
-                        </div>
+                            </div>
+                        ))}
+                    </div>
+                    <button onClick={openModalCreateCar}>
+                        Add
+                    </button>
+                </div>
+                <div className={cl.rightContainer}>
+                    <div className={cl.createResContainer}>
+                        <span>Add new reservation: </span>
+                        <button onClick={() => navigate('/new-reservation')}>
+                            Create
+                        </button>
+                    </div>
+                    <div className={cl.reservationsContainer}>
+                        <p className={cl.propHeader}>Reservations</p>
+                        <ReservationsTable
+                            reservations={sortedReservations}
+                            onCancel={cancelReservation}
+                            filter={
+                                <ReservationsFilter
+                                    filter={filter}
+                                    setFilter={setFilter}
+                                />
+                            }
+                        />
                     </div>
                 </div>
             </div>
@@ -266,4 +254,4 @@ const UserProfile = () => {
     );
 };
 
-export default observer(UserProfile);
+export default UserProfile;

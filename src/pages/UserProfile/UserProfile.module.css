@@ -1,54 +1,98 @@
 .profileContainer {
-    color: white;
+    height: 650px;
     text-align: left;
-    margin: 0 20px;
-    font: 900 25px "Inter Semi Bold", sans-serif;
-}
-
-
-.userInfo {
+    margin: 0 40px;
+    font-size: 20px;
+    font-weight: 900;
+    justify-content: space-between;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: column;
 }
 
-.userInfo p {
-    margin-bottom: 20px;
-    justify-content: space-between;
-    color: white;
+.leftContainer {
+    width: 50%;
+
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 10px;
+}
+
+.leftContainer button {
+    height: 30px;
+    width: 100px;
+    align-self: flex-end;
+    margin: 0 30px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.rightContainer {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 10px;
+}
+
+.leftPropsContainer {
+    overflow-y: auto;
+    height: 40%;
+    margin: 30px;
+    border: 3px solid gray;
+}
+
+.propHeader {
+    font-size: 30px;
+    background: gray;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 15px;
 }
 
 .propName {
+    padding: 0 10px;
     color: #7F8F96;
-    padding-bottom: 20px;
     cursor: pointer;
 }
 
-.propName:hover {
-    color: #90a4ab;
-}
-
-
-.userProps {
-    width: 100%;
-    padding-top: 50px;
+.carsContainer {
     display: flex;
     justify-content: space-between;
-    text-decoration: none;
 }
 
-.userCars,
-.userReservations {
+.carsContainer button {
+    width: 70px;
+    height: 35px;
+    margin: 0 10px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.carItem {
+    margin-bottom: 15px;
+}
+
+.createResContainer {
+    margin: 30px;
     display: flex;
-    align-items: center;
-    flex-direction: column;
+    justify-content: space-between;
 }
 
-.userCars {
-    width: 500px;
+.createResContainer button {
+    width: 40%;
+    height: 40px;
+    font-size: 15px;
+    font-weight: 600;
 }
 
-.userReservations {
-    width: 800px;
+.reservationsContainer {
+    margin: 30px;
+    border: 3px solid gray;
+    overflow-y: auto;
+    width: 100%;
+    height: 100%;
 }
+
+
+
+

@@ -6,7 +6,8 @@
 }
 
 .selectContainer span {
-    font: 900 30px "Inter Semi Bold", sans-serif;
+    font-size: 30px;
+    font-weight: 600;
     color: white;
     flex: 1;
     text-align: right;
@@ -18,7 +19,8 @@
     width: 350px;
     text-align: center;
     height: 40px;
-    font: 500 25px "Inter Semi Bold", sans-serif;
-    background-color: #a8a8a8;
+    font-weight: 600;
+    font-size: 25px;
+    background-color: #efefef;
     border-radius: 10px;
 }
