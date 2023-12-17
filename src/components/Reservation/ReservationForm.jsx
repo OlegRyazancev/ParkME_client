@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import ActBtn from "../UI/Button/ActBtn";
-import DateTimePicker from "../UI/DateTimePicker/DateTimePicker";
 import {format} from "date-fns";
+import cl from "../Car/Cars.module.css";
 
 const ReservationForm = ({onSubmit, validation, reservation}) => {
     const [selectedTimeTo, setSelectedTimeTo] = useState('');
@@ -28,11 +28,18 @@ const ReservationForm = ({onSubmit, validation, reservation}) => {
         }
     }
     return (
-        <div>
-            <p>Edit reservation</p>
-            <DateTimePicker name={"Select new timeTo"}
-                            action={handleTimeTo}/>
-            <p>{validationMessage ? validationMessage : validation}</p>
+        <div className={cl.formContainer}>
+            <p className={cl.formHeader}>Edit reservation</p>
+            <div className={cl.inputContainer}>
+                <span>Select new time to: </span>
+                <input
+                    type="datetime-local"
+                    min={new Date().toISOString().slice(0, 16)}
+                    max={'2050-01-01T00:00'}
+                    onChange={(e) => handleTimeTo(e.target.value)}
+                />
+            </div>
+            <p className={cl.validationMsg}>{validationMessage ? validationMessage : validation}</p>
             <ActBtn action={handleSubmit} label={"Edit"}/>
         </div>
     );

@@ -13,3 +13,42 @@
     border-radius: 10px;
 }
 
+.formContainer {
+    width: 600px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.formHeader {
+    width: 100%;
+    text-align: left;
+    font-size: 50px;
+    font-weight: 900;
+    padding: 10px 0;
+    color: #7F8F96;
+}
+.validationMsg {
+    padding: 10px 0;
+    color: #f65f5f;
+    font-size: 15px;
+}
+
+.inputContainer {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.inputContainer span{
+    width: 300px;
+}
+
+.inputContainer input {
+    width: 300px;
+    height: 50px;
+    text-align: center;
+}
