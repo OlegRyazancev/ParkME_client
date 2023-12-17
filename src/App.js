@@ -6,6 +6,7 @@ import {BrowserRouter} from "react-router-dom";
 import AppRouter from "./components/AppRouter";
 import Loader from "./components/UI/Loader/Loader";
 import Navbar from "./components/UI/Navbar/Navbar";
+import AdminLink from "./components/Admin/AdminLink";
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
             {store.isAuth ?
                 <>
                     <Navbar/>
+                    <AdminLink/>
                     <AppRouter/>
                 </>
                 : <AppRouter/>

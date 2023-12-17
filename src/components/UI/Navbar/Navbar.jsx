@@ -10,25 +10,42 @@ const Navbar = () => {
     return (
         <div className={cl.navbar}>
             <img src={logo} alt="logo" className={cl.navbar__logo}/>
-                <Link className={cl.navbar__links} to="/new-reservation">
-                    RESERVE
-                </Link>
-                <Link className={cl.navbar__links} to="/zones">
-                    ZONES
-                </Link>
-                <Link className={cl.navbar__links} to="/welcome">
-                    HOME
-                </Link>
-                <Link className={cl.navbar__links} to="/profile">
-                    PROFILE
-                </Link>
-                <Link className={cl.navbar__links} to="/about">
-                    ABOUT
-                </Link>
-                <button className={cl.navbar__links}
-                      onClick={() => store.logout()}>
-                    LOGOUT
-                </button>
+            <Link
+                className={cl.navbar__links}
+                to="/new-reservation"
+            >
+                RESERVE
+            </Link>
+            <Link
+                className={cl.navbar__links}
+                to="/zones"
+            >
+                ZONES
+            </Link>
+            <Link
+                className={cl.navbar__links}
+                to="/welcome"
+            >
+                HOME
+            </Link>
+            <Link
+                className={cl.navbar__links}
+                to="/profile"
+            >
+                PROFILE
+            </Link>
+            <Link
+                className={cl.navbar__links}
+                to="/about"
+            >
+                ABOUT
+            </Link>
+            <button
+                className={cl.navbar__links}
+                onClick={() => store.logout()}
+            >
+                LOGOUT
+            </button>
         </div>
     );
 };

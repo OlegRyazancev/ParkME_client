@@ -1,0 +1,9 @@
+.adminLinkContainer {
+    position: fixed;
+    right: 0;
+}
+
+button {
+    width: 75px;
+    height: 25px;
+}

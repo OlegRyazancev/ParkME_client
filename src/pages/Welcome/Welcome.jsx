@@ -12,8 +12,6 @@ const Welcome = () => {
     const {store} = useContext(Context);
     const [user, setUser] = useState({});
 
-    const admin = store.user.roles.includes('ROLE_ADMIN');
-
     const [fetchUser, isLoading] = useFetching(async (id) => {
         setUser((await UserService.getById(id)).data);
     });

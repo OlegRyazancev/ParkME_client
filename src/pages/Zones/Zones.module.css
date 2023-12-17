@@ -1,11 +1,9 @@
 .zonesHeader {
-    width: 100%;
     height: 200px;
     text-align: center;
     font-size: 128px;
     font-weight: 900;
 }
-
 
 .zoneName,
 .zoneLogo,
@@ -24,8 +22,7 @@
 
 .zoneList {
     display: flex;
-    width: 100%;
-    padding: 0 150px;
+    padding: 0 75px;
     flex-wrap: wrap;
     justify-content: space-between;
 }

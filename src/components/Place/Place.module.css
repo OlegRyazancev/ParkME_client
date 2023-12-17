@@ -40,7 +40,8 @@
 .free,
 .occupied,
 .disable {
-    font: 900 25px "Inter Semi Bold", sans-serif;
+    font-size: 25px;
+    font-weight: 900;
     opacity: 0.7;
     background-color: transparent;
 }
