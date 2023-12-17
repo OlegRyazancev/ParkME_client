@@ -4,6 +4,7 @@ import ZoneById from "../pages/ZoneById/ZoneById";
 import UserProfile from "../pages/UserProfile/UserProfile";
 import NewReservation from "../pages/NewReservation/NewReservation";
 import Welcome from "../pages/Welcome/Welcome";
+import AdminPage from "../pages/Admin/AdminPage";
 
 export const privateRoutes = [
     {path: '/zones', element: <Zones/>},
@@ -13,5 +14,9 @@ export const privateRoutes = [
     {path: '/welcome', element: <Welcome/>}
 ]
 export const publicRoutes = [
-    {path: '/login', element: <Auth/>},
+    {path: '/login', element: <Auth/>}
+]
+
+export const adminRoutes = [
+    {path: '/admin', element: <AdminPage/>}
 ]

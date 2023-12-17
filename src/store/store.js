@@ -3,7 +3,6 @@ import AuthService from "../service/AuthService";
 import axios from "axios";
 import {API_URL} from "../http";
 import {jwtDecode} from "jwt-decode";
-import {useEffect} from "react";
 
 export default class Store {
 
