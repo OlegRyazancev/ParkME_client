@@ -2,6 +2,8 @@ import {makeAutoObservable} from "mobx";
 import AuthService from "../service/AuthService";
 import axios from "axios";
 import {API_URL} from "../http";
+import {jwtDecode} from "jwt-decode";
+import {useEffect} from "react";
 
 export default class Store {
 
@@ -27,11 +29,13 @@ export default class Store {
             const {id, username} = response.data;
 
             localStorage.setItem('accessToken', response.data.accessToken);
-            localStorage.setItem('refreshToken', response.data.refreshToken)
+            localStorage.setItem('refreshToken', response.data.refreshToken);
+            const decodedToken = jwtDecode(response.data.accessToken);
             this.setAuth(true);
             this.setUser({
                 id: id,
-                username: username
+                username: username,
+                roles: decodedToken.roles
             })
         } catch (e) {
             throw e
@@ -69,10 +73,12 @@ export default class Store {
             localStorage.setItem('accessToken', response.data.accessToken)
             localStorage.setItem('refreshToken', response.data.refreshToken)
             this.setAuth(true);
+            const decodedToken = jwtDecode(response.data.accessToken);
             const {id, username} = response.data;
             this.setUser({
                 id: id,
-                username: username
+                username: username,
+                roles: decodedToken.roles
             })
         } catch (e) {
             console.log(e)
