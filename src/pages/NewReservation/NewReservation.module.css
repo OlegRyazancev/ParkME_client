@@ -9,10 +9,11 @@
 .validationMsg {
     color: #f65f5f;
     padding: 10px 0;
-    font: 900 20px "Inter Semi Bold", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
 }
 
 option {
     background: transparent;
-    font: 20px "Inter Semi Bold", sans-serif;
+    font-size: 20px;
 }
