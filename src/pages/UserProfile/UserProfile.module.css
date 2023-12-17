@@ -93,6 +93,27 @@
     height: 100%;
 }
 
+table {
+    width: 100%;
+    text-align: center;
+}
+
+th {
+    color: #7F8F96;
+}
+
+td {
+    font-size: 17px;
+    justify-content: center;
+}
+
+td button {
+    width: 60px;
+    height: 20px;
+    font-weight: 600;
+    align-items: center;
+}
+
 
 
 

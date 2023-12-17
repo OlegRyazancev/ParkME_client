@@ -1,63 +1,62 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import ActBtn from "../UI/Button/ActBtn";
-import cl from "./Cars.module.css"
-import Select from "../UI/Select/Select";
+import React, {useMemo, useState} from 'react';
+import ActBtn from '../UI/Button/ActBtn';
+import cl from './Cars.module.css';
 
-const CarForm = ({onSubmit, validation, carId, oldNumber}) => {
+const CarForm = ({onSubmit, validation, car}) => {
     const [carNumber, setCarNumber] = useState('');
     const [carType, setCarType] = useState('');
-    const [buttonLabel, setButtonLabel] = useState(carId ? 'edit' : 'create')
+    const [buttonLabel] = useState(car ? 'save' : 'create');
     const [validationMessage, setValidationMessage] = useState('');
 
-    useEffect(() => {
-        setButtonLabel(carId ? 'save' : 'create');
-    }, [carId]);
-
     const handleSubmit = () => {
-        if (!carNumber.trim() || !carType.trim()) {
-            setValidationMessage('Please fill in all fields');
-            return;
-        }
-        if (carId) {
+        if (car) {
             onSubmit({
-                id: carId,
+                id: car.id,
                 number: carNumber,
-                type: carType
+                type: car.type
             });
         } else {
+            if (!carNumber.trim() || !carType.trim()) {
+                setValidationMessage('Please fill in all fields');
+                return;
+            }
             onSubmit({
                 number: carNumber,
                 type: carType
             });
         }
         setCarNumber('');
+        setCarType('');
     };
 
-    const carTypes = [
-        'SEDAN',
-        'COUPE',
-        'CONVERTIBLE',
-        'SUV',
-        'TRUCK',
-        'HATCHBACK',
-        'MINIVAN',
-        'ELECTRIC',
-        'HYBRID',
-    ];
-    const carTypeOptions = useMemo(() => (
-        <>
-            <option value="">Select Car Type</option>
-            {carTypes.map((type) => (
-                <option key={type} value={type}>
-                    {type}
-                </option>
-            ))}
-        </>
-    ), [carTypes]);
+    const carTypeOptions = useMemo(() => {
+        const carTypes = [
+            'SEDAN',
+            'COUPE',
+            'CONVERTIBLE',
+            'SUV',
+            'TRUCK',
+            'HATCHBACK',
+            'MINIVAN',
+            'ELECTRIC',
+            'HYBRID',
+        ];
+
+        return (
+            <>
+                <option value="">Select Car Type</option>
+                {carTypes.map((type) => (
+                    <option key={type} value={type}>
+                        {type}
+                    </option>
+                ))}
+            </>
+        );
+    }, []);
 
     return (
         <div className={cl.formContainer}>
-            <p className={cl.formHeader}>{carId ? `Edit: ${oldNumber}` : "New car"}</p>
+            <p className={cl.formHeader}>{car ? `Edit: ${car.number}` : 'New car'}</p>
             <div className={cl.inputContainer}>
                 <span>Enter new car number: </span>
                 <input
@@ -66,14 +65,28 @@ const CarForm = ({onSubmit, validation, carId, oldNumber}) => {
                     type="text"
                     placeholder="A000AA00"
                 />
-                <Select options={carTypeOptions}
-                        action={(selectedType) => setCarType(selectedType)}/>
             </div>
-            <p className={cl.validationMsg}>
-                {validationMessage
-                    ? validationMessage
-                    : validation}
-            </p>
+            <div className={cl.inputContainer}>
+                <span>Select new car type: </span>
+                {car ? (
+                    <input
+                        type="text"
+                        value={car.type}
+                        readOnly
+                        placeholder={car.type}
+                    />
+                ) : (
+
+                    <select onChange={(e) => setCarType(e.target.value)}
+                            value={carType}>
+                        {carTypeOptions}
+                    </select>
+
+                )}
+            </div>
+
+
+            <p className={cl.validationMsg}>{validationMessage ? validationMessage : validation}</p>
             <ActBtn action={handleSubmit} label={buttonLabel}/>
         </div>
     );

@@ -1,19 +1,20 @@
-.formContainer{
+.formContainer {
     background-color: transparent;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-.formHeader{
+.formHeader {
     width: 100%;
     text-align: left;
-    font: 900 50px "Inter Semi Bold", sans-serif;
+    font-weight: 900;
+    font-size: 50px;
     padding: 10px 0;
     color: #7F8F96;
 }
 
-.inputContainer{
+.inputContainer {
     width: 100%;
     background-color: transparent;
     display: flex;
@@ -22,16 +23,17 @@
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
+
 .inputContainer input {
     width: 40%;
     text-align: center;
 }
 
-.inputContainer span{
+.inputContainer span {
     width: 300px;
 }
 
-.validationMsg{
+.validationMsg {
     padding: 10px 0;
     color: #f65f5f;
     font-size: 15px;
