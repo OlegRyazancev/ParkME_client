@@ -1,5 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Context} from "../../index";
+import React, {useEffect, useState} from 'react';
 import {useFetching} from "../../hooks/useFetching";
 import CarService from "../../service/CarService";
 import ReservationService from "../../service/ReservationService";

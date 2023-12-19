@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import ActBtn from "../UI/Button/ActBtn";
 import cl from "./User.module.css"
-import {observer} from "mobx-react-lite";
 
 const UserForm = ({onSubmit, user, validation}) => {
     const [name, setName] = useState('');
@@ -68,4 +67,4 @@ const UserForm = ({onSubmit, user, validation}) => {
     );
 };
 
-export default observer(UserForm);
+export default UserForm;

@@ -9,7 +9,7 @@ import AdminPage from "../pages/Admin/AdminPage";
 export const privateRoutes = [
     {path: '/zones', element: <Zones/>},
     {path: '/zones/:id', element: <ZoneById/>},
-    {path: '/profile', element: <UserProfile/>},
+    {path: '/profile/:id', element: <UserProfile/>},
     {path: '/new-reservation', element: <NewReservation/>},
     {path: '/welcome', element: <Welcome/>}
 ]

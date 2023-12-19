@@ -30,7 +30,7 @@ const Navbar = () => {
             </Link>
             <Link
                 className={cl.navbar__links}
-                to="/profile"
+                to={`/profile/${store.user.id}`}
             >
                 PROFILE
             </Link>

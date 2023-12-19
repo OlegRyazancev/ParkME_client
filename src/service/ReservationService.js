@@ -16,4 +16,8 @@ export default class ReservationService {
     static async update(reservationData) {
         return await $api.put(`/reservations`, reservationData);
     }
+
+    static async delete(id) {
+        return await $api.delete(`/reservations/${id}`);
+    }
 }
