@@ -12,6 +12,7 @@ const Zones = () => {
         const response = await ZoneService.getAll();
         setZones([...zones, ...response.data])
     })
+    const sortedZones = [...zones].sort((a, b) => a.id - b.id);
 
     useEffect(() => {
         fetchZones();
@@ -21,7 +22,7 @@ const Zones = () => {
         <div className="App">
             <div className={cl.zonesHeader}>Parking zones</div>
             {isZonesLoading && <Loader/>}
-            <ZoneList zones={zones}/>
+            <ZoneList zones={sortedZones}/>
         </div>
     )
 }
