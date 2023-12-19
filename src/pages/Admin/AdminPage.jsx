@@ -28,12 +28,14 @@ const AdminPage = () => {
     const [modalCreatePlaces, setModalCreatePlaces] = useState(false);
 
     const [modalUpdateZone, setModalUpdateZone] = useState(false);
-    const [modalChangePlaceStatus, setModalChangePlaceStatus] = useState(false);
-    const [modalDeletePlace, setModalDeletePlace] = useState(false);
+
+    const sortedZones = [...zones].sort((a, b) => a.id - b.id);
+    const sortedReservations = [...reservations].sort((a, b) => a.id - b.id);
+    const sortedCars = [...cars].sort((a, b) => a.id - b.id);
+    const sortedUsers = [...users].sort((a, b) => a.id - b.id);
 
     const openModalCreateZone = () => setModalCreateZone(true);
     const openModalCreatePlaces = () => setModalCreatePlaces(true);
-    const openModalDeletePlace = () => setModalDeletePlace(true);
 
     const openModalUpdateZone = (zoneId) => {
         setSelectedZoneId(zoneId);
@@ -181,19 +183,6 @@ const AdminPage = () => {
                 onClose={clearValidationMessage}>
                 //TODO
             </Modal>
-            <Modal
-                visible={modalChangePlaceStatus}
-                setVisible={setModalChangePlaceStatus}
-                onClose={clearValidationMessage}>
-                //TODO
-            </Modal>
-            <Modal
-                visible={modalDeletePlace}
-                setVisible={setModalDeletePlace}
-                onClose={clearValidationMessage}>
-                //TODO
-            </Modal>
-
 
             <Modal
                 visible={modalCreateZone}
@@ -229,7 +218,7 @@ const AdminPage = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {users.map((user, index) => (
+                        {sortedUsers.map((user, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>
@@ -259,7 +248,7 @@ const AdminPage = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {cars.map((car, index) => (
+                        {sortedCars.map((car, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{car.number}</td>
@@ -292,7 +281,7 @@ const AdminPage = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {reservations.map((reservation, index) => (
+                        {sortedReservations.map((reservation, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td>{reservation.timeFrom}</td>
@@ -325,10 +314,10 @@ const AdminPage = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {zones.map((zone, index) => (
+                        {sortedZones.map((zone, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
-                                <td>{zone.number}</td>
+                                <td><Link to={`/zones/${zone.id}`}>{zone.number}</Link></td>
                                 <td>{zone?.totalPlaces}</td>
                                 <td>{zone?.freePlaces}</td>
                                 <td>
@@ -343,12 +332,6 @@ const AdminPage = () => {
                                         Delete
                                     </button>
                                 </td>
-                                <td>
-                                    <button
-                                        onClick={() => openModalDeletePlace}>
-                                        Delete place
-                                    </button>
-                                </td>
                             </tr>
                         ))}
                         </tbody>
@@ -356,7 +339,8 @@ const AdminPage = () => {
                     <button onClick={openModalCreateZone}>
                         Create zone
                     </button>
-                    <button onClick={() => openModalCreatePlaces}>
+                    <button
+                        onClick={() => openModalCreatePlaces(selectedZoneId)}>
                         Add places
                     </button>
                 </div>
