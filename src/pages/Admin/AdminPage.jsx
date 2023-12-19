@@ -9,6 +9,7 @@ import UserService from "../../service/UserService";
 import ReservationService from "../../service/ReservationService";
 import Modal from "../../components/UI/Modal/Modal";
 import ZoneForm from "../../components/Zone/ZoneForm";
+import PlaceForm from "../../components/Place/PlaceForm";
 
 const AdminPage = () => {
 
@@ -35,7 +36,10 @@ const AdminPage = () => {
     const sortedUsers = [...users].sort((a, b) => a.id - b.id);
 
     const openModalCreateZone = () => setModalCreateZone(true);
-    const openModalCreatePlaces = () => setModalCreatePlaces(true);
+    const openModalCreatePlaces = (zoneId) => {
+        setSelectedZoneId(zoneId);
+        setModalCreatePlaces(true);
+    }
 
     const openModalUpdateZone = (zoneId) => {
         setSelectedZoneId(zoneId);
@@ -91,17 +95,6 @@ const AdminPage = () => {
         }
     });
 
-    const [deletePlace] = useFetching(async (id) => {
-        try {
-            await AdminService.deletePlace(id);
-            setMessage("Place successfully deleted!");
-            setModalMessage(true);
-        } catch (e) {
-            setMessage(e.response.data.message);
-            setModalMessage(true);
-        }
-    });
-
     const [createZone] = useFetching(async (zoneData) => {
         try {
             const response = await AdminService.createZone(zoneData);
@@ -116,7 +109,7 @@ const AdminPage = () => {
                 error.response.data?.errors?.number || error.response?.data?.message;
             setValidationMessage(errorMessage);
         }
-    })
+    });
 
     const [updateZone] = useFetching(async (zoneData) => {
         try {
@@ -138,8 +131,20 @@ const AdminPage = () => {
                 error.response.data?.errors?.number || error.response?.data?.message;
             setValidationMessage(errorMessage);
         }
-    })
+    });
 
+    const [createPlaces] = useFetching(async (countPlaces) => {
+        try {
+            await AdminService.createPlacesInZone(selectedZoneId, countPlaces);
+            setModalCreatePlaces(false);
+            setMessage("Places successfully created! Please reload the page");
+            setModalMessage(true);
+            setValidationMessage('');
+        } catch (error) {
+            const errorMessage = error.response.data?.message;
+            setValidationMessage(errorMessage);
+        }
+    })
 
     const [fetchUsers] = useFetching(async () => {
         const response = await AdminService.getAllUsers();
@@ -181,7 +186,10 @@ const AdminPage = () => {
                 visible={modalCreatePlaces}
                 setVisible={setModalCreatePlaces}
                 onClose={clearValidationMessage}>
-                //TODO
+                <PlaceForm
+                    create={createPlaces}
+                    validation={validationMessage}
+                />
             </Modal>
 
             <Modal
@@ -317,9 +325,17 @@ const AdminPage = () => {
                         {sortedZones.map((zone, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
-                                <td><Link to={`/zones/${zone.id}`}>{zone.number}</Link></td>
+                                <td><Link
+                                    to={`/zones/${zone.id}`}>{zone.number}</Link>
+                                </td>
                                 <td>{zone?.totalPlaces}</td>
                                 <td>{zone?.freePlaces}</td>
+                                <td>
+                                    <button
+                                        onClick={() => openModalCreatePlaces(zone.id)}>
+                                        Add places
+                                    </button>
+                                </td>
                                 <td>
                                     <button
                                         onClick={() => openModalUpdateZone(zone.id)}
@@ -338,10 +354,6 @@ const AdminPage = () => {
                     </table>
                     <button onClick={openModalCreateZone}>
                         Create zone
-                    </button>
-                    <button
-                        onClick={() => openModalCreatePlaces(selectedZoneId)}>
-                        Add places
                     </button>
                 </div>
             </div>
