@@ -2,7 +2,7 @@ import React from 'react';
 import {useContext} from "react";
 import {useNavigate} from "react-router-dom";
 import {Context} from "../../index";
-import cl from "./AdminLink.module.css"
+import cl from "./Admin.module.css"
 
 const AdminLink = () => {
     const {store} = useContext(Context);

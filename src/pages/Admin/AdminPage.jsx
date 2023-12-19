@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {useFetching} from "../../hooks/useFetching";
 import AdminService from "../../service/AdminService";
 import cl from "./Admin.module.css";
-import {Link} from "react-router-dom";
 import ZoneService from "../../service/ZoneService";
 import CarService from "../../service/CarService";
 import UserService from "../../service/UserService";
@@ -10,6 +9,11 @@ import ReservationService from "../../service/ReservationService";
 import Modal from "../../components/UI/Modal/Modal";
 import ZoneForm from "../../components/Zone/ZoneForm";
 import PlaceForm from "../../components/Place/PlaceForm";
+import AdminZonesTable from "../../components/Admin/AdminZonesTable";
+import AdminUsersTable from "../../components/Admin/AdminUsersTable";
+import AdminCarsTable from "../../components/Admin/AdminCarsTable";
+import AdminReservationsTable
+    from "../../components/Admin/AdminReservationsTable";
 
 const AdminPage = () => {
 
@@ -26,14 +30,10 @@ const AdminPage = () => {
     const [modalMessage, setModalMessage] = useState(false);
 
     const [modalCreateZone, setModalCreateZone] = useState(false);
-    const [modalCreatePlaces, setModalCreatePlaces] = useState(false);
-
     const [modalUpdateZone, setModalUpdateZone] = useState(false);
 
-    const sortedZones = [...zones].sort((a, b) => a.id - b.id);
-    const sortedReservations = [...reservations].sort((a, b) => a.id - b.id);
-    const sortedCars = [...cars].sort((a, b) => a.id - b.id);
-    const sortedUsers = [...users].sort((a, b) => a.id - b.id);
+    const [modalCreatePlaces, setModalCreatePlaces] = useState(false);
+
 
     const openModalCreateZone = () => setModalCreateZone(true);
     const openModalCreatePlaces = (zoneId) => {
@@ -181,7 +181,6 @@ const AdminPage = () => {
                 {message}
             </Modal>
 
-
             <Modal
                 visible={modalCreatePlaces}
                 setVisible={setModalCreatePlaces}
@@ -202,6 +201,7 @@ const AdminPage = () => {
                     zoneId={null}
                 />
             </Modal>
+
             <Modal
                 visible={modalUpdateZone}
                 setVisible={setModalUpdateZone}
@@ -213,148 +213,35 @@ const AdminPage = () => {
                 />
             </Modal>
 
-
             <div className={cl.leftContainer}>
                 <div className={cl.usersContainer}>
-                    <p className={cl.propHeader}>Users</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>№</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {sortedUsers.map((user, index) => (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>
-                                    <Link to={`/profile/${user.id}`}>
-                                        {user.name}
-                                    </Link>
-                                </td>
-                                <td>{user.email}</td>
-                                <td>
-                                    <button onClick={() => deleteUser(user.id)}>
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                    <AdminUsersTable
+                        users={users}
+                        onDelete={deleteUser}
+                    />
                 </div>
                 <div className={cl.carsContainer}>
-                    <p className={cl.propHeader}>Cars</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>№</th>
-                            <th>Number</th>
-                            <th>Type</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {sortedCars.map((car, index) => (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{car.number}</td>
-                                <td>{car.type}</td>
-                                <td>
-                                    <button onClick={() => deleteCar(car.id)}>
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                    <AdminCarsTable
+                        cars={cars}
+                        onDelete={deleteCar}
+                    />
                 </div>
             </div>
             <div className={cl.rightContainer}>
                 <div className={cl.reservationsContainer}>
-                    <p className={cl.propHeader}>Reservations</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>№</th>
-                            <th>Time From</th>
-                            <th>Time To</th>
-                            <th>Zone</th>
-                            <th>Place</th>
-                            <th>Car</th>
-                            <th>Status</th>
-                            <th>User</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {sortedReservations.map((reservation, index) => (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{reservation.timeFrom}</td>
-                                <td>{reservation.timeTo}</td>
-                                <td>{reservation.zone?.number}</td>
-                                <td>{reservation.place?.number}</td>
-                                <td>{reservation.car?.number}</td>
-                                <td>{reservation.status}</td>
-                                <td>{reservation.user?.email}</td>
-                                <td>
-                                    <button
-                                        onClick={() => deleteReservation(reservation.id)}>
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                    <AdminReservationsTable
+                        reservations={reservations}
+                        onDelete={deleteReservation}
+                    />
                 </div>
                 <div className={cl.zonesContainer}>
-                    <p className={cl.propHeader}>Zones</p>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>№</th>
-                            <th>Number</th>
-                            <th>All places</th>
-                            <th>Free places</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {sortedZones.map((zone, index) => (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td><Link
-                                    to={`/zones/${zone.id}`}>{zone.number}</Link>
-                                </td>
-                                <td>{zone?.totalPlaces}</td>
-                                <td>{zone?.freePlaces}</td>
-                                <td>
-                                    <button
-                                        onClick={() => openModalCreatePlaces(zone.id)}>
-                                        Add places
-                                    </button>
-                                </td>
-                                <td>
-                                    <button
-                                        onClick={() => openModalUpdateZone(zone.id)}
-                                    >
-                                        Edit
-                                    </button>
-                                </td>
-                                <td>
-                                    <button onClick={() => deleteZone(zone.id)}>
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                    <button onClick={openModalCreateZone}>
-                        Create zone
-                    </button>
+                    <AdminZonesTable
+                        zones={zones}
+                        onCreatePlaces={openModalCreatePlaces}
+                        onUpdateZone={openModalUpdateZone}
+                        onCreateZone={openModalCreateZone}
+                        onDelete={deleteZone}
+                    />
                 </div>
             </div>
         </div>
