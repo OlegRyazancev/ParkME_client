@@ -7,18 +7,18 @@ import cl from "./UserProfile.module.css"
 import UserService from "../../service/UserService";
 import Modal from "../../components/UI/Modal/Modal";
 import CarForm from "../../components/Car/CarForm";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import UserForm from "../../components/User/UserForm";
 import {useReservations} from "../../hooks/useReservations";
 import ReservationsFilter
     from "../../components/Reservation/ReservationsFilter";
 import PageHeader from "../../components/UI/PageHeader/PageHeader";
 import ReservationForm from "../../components/Reservation/ReservationForm";
-import {tr} from "date-fns/locale";
-
 
 const UserProfile = () => {
-    const {store} = useContext(Context);
+
+    const params = useParams();
+
     const [user, setUser] = useState({})
     const [cars, setCars] = useState([]);
     const [reservations, setReservations] = useState([]);
@@ -86,8 +86,8 @@ const UserProfile = () => {
             setMessage("Car successfully deleted!")
             setModalMessage(true)
         } catch (e) {
-            setModalMessage(true)
             setMessage(e.response.data.message)
+            setModalMessage(true)
         }
     })
 
@@ -163,8 +163,6 @@ const UserProfile = () => {
 
     const [updateUser] = useFetching(async (userData) => {
         try {
-            console.log(store.user)
-            console.log(userData)
             await UserService.update(
                 userData.id,
                 userData.name,
@@ -174,7 +172,6 @@ const UserProfile = () => {
             setModalUpdateUser(false);
             setMessage("User successfully updated! Please reload the page");
             setModalMessage(true);
-            console.log(store.user.name)
         } catch (error) {
             const errorMessage =
                 error.response.data?.errors?.email
@@ -182,16 +179,14 @@ const UserProfile = () => {
                 || error.response.data?.errors?.name
                 || error.response.data?.errors?.password
             setValidationMessage(errorMessage);
-            console.log(error)
-            console.log(error.data)
         }
     })
 
     useEffect(() => {
-        fetchUser(store.user.id)
-        fetchCars(store.user.id)
-        fetchReservations(store.user.id)
-    }, [store.user.id]);
+        fetchCars(params.id);
+        fetchUser(params.id);
+        fetchReservations(params.id);
+    }, [params.id]);
 
     return (
         <div className="App">
@@ -205,8 +200,9 @@ const UserProfile = () => {
                 setVisible={setModalCreateCar}
                 onClose={clearValidationMsg}>
                 <CarForm
-                    onSubmit={createCar}
+                    action={createCar}
                     validation={validationMessage}
+                    selectedCar={null}
                 />
             </Modal>
             <Modal
@@ -214,9 +210,9 @@ const UserProfile = () => {
                 setVisible={setModalUpdateCar}
                 onClose={clearValidationMsg}>
                 <CarForm
-                    onSubmit={updateCar}
+                    action={updateCar}
                     validation={validationMessage}
-                    car={selectedCar}
+                    selectedCar={selectedCar}
                 />
             </Modal>
             <Modal
@@ -226,7 +222,7 @@ const UserProfile = () => {
                 <UserForm
                     onSubmit={updateUser}
                     validation={validationMessage}
-                    user={store.user}
+                    user={user}
                 />
             </Modal>
             <Modal
@@ -245,14 +241,14 @@ const UserProfile = () => {
                     <div className={cl.leftPropsContainer}>
                         <p className={cl.propHeader}>User Info</p>
                         <p>
-                            <span
-                                className={cl.propName}>name:
+                            <span className={cl.propName}>
+                                name:
                             </span>
                             {user.name}
                         </p>
                         <p>
-                            <span
-                                className={cl.propName}>email:
+                            <span className={cl.propName}>
+                                email:
                             </span>
                             {user.email}
                         </p>
@@ -264,8 +260,8 @@ const UserProfile = () => {
                             <div key={car.id} className={cl.carsContainer}>
                                 <div className={cl.carItem}>
                                     <p>
-                                        <span
-                                            className={cl.propName}>number:
+                                        <span className={cl.propName}>
+                                            number:
                                         </span>
                                         {car.number}
                                     </p>
@@ -316,7 +312,6 @@ const UserProfile = () => {
                                     <th>Place</th>
                                     <th>Car</th>
                                     <th>Status</th>
-
                                 </tr>
                                 </thead>
                                 <tbody>

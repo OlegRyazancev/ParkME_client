@@ -2,31 +2,19 @@ import React, {useMemo, useState} from 'react';
 import ActBtn from '../UI/Button/ActBtn';
 import cl from './Cars.module.css';
 
-const CarForm = ({onSubmit, validation, car}) => {
-    const [carNumber, setCarNumber] = useState('');
-    const [carType, setCarType] = useState('');
-    const [buttonLabel] = useState(car ? 'save' : 'create');
-    const [validationMessage, setValidationMessage] = useState('');
-
-    const handleSubmit = () => {
-        if (car) {
-            onSubmit({
-                id: car.id,
-                number: carNumber,
-                type: car.type
-            });
-        } else {
-            if (!carNumber.trim() || !carType.trim()) {
-                setValidationMessage('Please fill in all fields');
-                return;
+const CarForm = ({action, validation, selectedCar}) => {
+    const [car, setCar] = useState({number: '', type: ''})
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (selectedCar !== null) {
+            const updatedCar = {
+                ...car, id: selectedCar.id, type: selectedCar.type
             }
-            onSubmit({
-                number: carNumber,
-                type: carType
-            });
+            action(updatedCar);
+        } else {
+            action(car);
         }
-        setCarNumber('');
-        setCarType('');
+        setCar({number: '', type: ''});
     };
 
     const carTypeOptions = useMemo(() => {
@@ -56,38 +44,59 @@ const CarForm = ({onSubmit, validation, car}) => {
 
     return (
         <div className={cl.formContainer}>
-            <p className={cl.formHeader}>{car ? `Edit: ${car.number}` : 'New car'}</p>
-            <div className={cl.inputContainer}>
-                <span>Enter new car number: </span>
-                <input
-                    onChange={(e) => setCarNumber(e.target.value)}
-                    value={carNumber}
-                    type="text"
-                    placeholder="A000AA00"
-                />
-            </div>
-            <div className={cl.inputContainer}>
-                <span>Select new car type: </span>
-                {car ? (
+            <form>
+                <p className={cl.formHeader}>
+                    {selectedCar !== null
+                        ? 'Edit car'
+                        : 'Create car'}
+                </p>
+                <div className={cl.inputContainer}>
+                    <span>Enter new car number: </span>
                     <input
                         type="text"
-                        value={car.type}
-                        readOnly
-                        placeholder={car.type}
+                        onChange={(e) =>
+                            setCar({
+                                ...car,
+                                number: e.target.value
+                            })}
+                        value={car.number}
+                        placeholder="A000AA00"
                     />
-                ) : (
+                </div>
+                <div className={cl.inputContainer}>
+                    <span>Select new car type: </span>
+                    {selectedCar !== null
+                        ? (
+                            <input
+                            type="text"
+                            value={car.type}
+                            readOnly
+                            placeholder="disable"
+                        />
+                        )
+                        : (
+                            <select
+                                onChange={(e) => setCar({
+                                    ...car,
+                                    type: e.target.value
+                                })}
+                                value={car.type}
+                            >
+                                {carTypeOptions}
+                            </select>
 
-                    <select onChange={(e) => setCarType(e.target.value)}
-                            value={carType}>
-                        {carTypeOptions}
-                    </select>
-
-                )}
-            </div>
-
-
-            <p className={cl.validationMsg}>{validationMessage ? validationMessage : validation}</p>
-            <ActBtn action={handleSubmit} label={buttonLabel}/>
+                        )}
+                </div>
+                <p className={cl.validationMsg}>{validation}</p>
+                <ActBtn
+                    action={handleSubmit}
+                    label={
+                        selectedCar !== null
+                            ? 'Save'
+                            : 'Create'
+                    }
+                />
+            </form>
         </div>
     );
 };
