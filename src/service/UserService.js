@@ -5,8 +5,8 @@ export default class UserService {
         return $api.get('/users/' + id)
     };
 
-    static async update(id, name, email, password) {
-        return $api.put('/users', {id, name, email, password});
+    static async update(userData) {
+        return $api.put('/users', userData);
     };
 
     static async delete(id) {

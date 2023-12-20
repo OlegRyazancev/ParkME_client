@@ -162,21 +162,19 @@ const UserProfile = () => {
 
     const [updateUser] = useFetching(async (userData) => {
         try {
-            await UserService.update(
-                userData.id,
-                userData.name,
-                userData.email,
-                userData.password
-            );
+            console.log(userData)
+            await UserService.update(userData);
             setModalUpdateUser(false);
             setMessage("User successfully updated! Please reload the page");
             setModalMessage(true);
         } catch (error) {
+            console.log(error.response)
             const errorMessage =
                 error.response.data?.errors?.email
                 || error.response.data?.message
                 || error.response.data?.errors?.name
                 || error.response.data?.errors?.password
+                || error.response.data?.errors
             setValidationMessage(errorMessage);
         }
     })
@@ -219,9 +217,9 @@ const UserProfile = () => {
                 setVisible={setModalUpdateUser}
                 onClose={clearValidationMsg}>
                 <UserForm
-                    onSubmit={updateUser}
+                    action={updateUser}
                     validation={validationMessage}
-                    user={user}
+                    userId={params.id}
                 />
             </Modal>
             <Modal

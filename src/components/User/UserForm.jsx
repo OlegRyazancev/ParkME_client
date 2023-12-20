@@ -2,28 +2,20 @@ import React, {useState} from 'react';
 import ActBtn from "../UI/Button/ActBtn";
 import cl from "./User.module.css"
 
-const UserForm = ({onSubmit, user, validation}) => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [validationMessage, setValidationMessage] = useState('');
+const UserForm = ({action, validation, userId}) => {
+    const [user, setUser] = useState({
+        name: null,
+        email: null,
+        password: null
+    })
 
-    const handleSubmit = () => {
-        if (!name.trim() || !email.trim() || !password.trim()) {
-            setValidationMessage('Please fill in all fields');
-            return;
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const updatedUser = {
+            ...user, id: userId
         }
-        const userData = {
-            id: user.id,
-            name: name,
-            email: email,
-            password: password
-        }
-        onSubmit(userData)
-        setName('');
-        setEmail('');
-        setPassword('');
-        setValidationMessage('')
+        action(updatedUser);
+        setUser({name: '', email: '', password: ''})
     }
 
     return (
@@ -32,34 +24,38 @@ const UserForm = ({onSubmit, user, validation}) => {
             <div className={cl.inputContainer}>
                 <span>Enter old / new name: </span>
                 <input
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) =>
+                        setUser({
+                            ...user, name: e.target.value
+                        })}
                     type="text"
-                    value={name}
                     placeholder={"Name"}
                 />
             </div>
             <div className={cl.inputContainer}>
                 <span>Enter old / new email: </span>
                 <input
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) =>
+                        setUser({
+                            ...user, email: e.target.value
+                        })}
                     type="text"
-                    value={email}
                     placeholder={"email@example.com"}
                 />
             </div>
             <div className={cl.inputContainer}>
                 <span>Enter old / new password: </span>
                 <input
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) =>
+                        setUser({
+                            ...user, password: e.target.value
+                        })}
                     type="password"
-                    value={password}
                     placeholder={"password"}
                 />
             </div>
             <p className={cl.validationMsg}>
-                {validationMessage
-                    ? validationMessage
-                    : validation}
+                {validation}
             </p>
             <ActBtn action={handleSubmit} label={'save'}/>
         </div>
