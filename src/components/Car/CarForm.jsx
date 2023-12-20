@@ -3,7 +3,7 @@ import ActBtn from '../UI/Button/ActBtn';
 import cl from './Cars.module.css';
 
 const CarForm = ({action, validation, selectedCar}) => {
-    const [car, setCar] = useState({number: '', type: ''})
+    const [car, setCar] = useState({number: null, type: null})
     const handleSubmit = (e) => {
         e.preventDefault();
         if (selectedCar !== null) {
@@ -14,7 +14,7 @@ const CarForm = ({action, validation, selectedCar}) => {
         } else {
             action(car);
         }
-        setCar({number: '', type: ''});
+        setCar({number: null, type: null});
     };
 
     const carTypeOptions = useMemo(() => {
@@ -59,7 +59,6 @@ const CarForm = ({action, validation, selectedCar}) => {
                                 ...car,
                                 number: e.target.value
                             })}
-                        value={car.number}
                         placeholder="A000AA00"
                     />
                 </div>
@@ -68,11 +67,11 @@ const CarForm = ({action, validation, selectedCar}) => {
                     {selectedCar !== null
                         ? (
                             <input
-                            type="text"
-                            value={car.type}
-                            readOnly
-                            placeholder="disable"
-                        />
+                                type="text"
+                                value={selectedCar.type}
+                                readOnly
+                                placeholder="disable"
+                            />
                         )
                         : (
                             <select
@@ -80,23 +79,23 @@ const CarForm = ({action, validation, selectedCar}) => {
                                     ...car,
                                     type: e.target.value
                                 })}
-                                value={car.type}
                             >
                                 {carTypeOptions}
                             </select>
 
                         )}
                 </div>
-                <p className={cl.validationMsg}>{validation}</p>
-                <ActBtn
-                    action={handleSubmit}
-                    label={
-                        selectedCar !== null
-                            ? 'Save'
-                            : 'Create'
-                    }
-                />
             </form>
+            <p className={cl.validationMsg}>{validation}</p>
+            <ActBtn
+                action={handleSubmit}
+                label={
+                    selectedCar !== null
+                        ? 'Save'
+                        : 'Create'
+                }
+            />
+
         </div>
     );
 };
