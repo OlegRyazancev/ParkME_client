@@ -3,11 +3,59 @@
     right: 0;
 }
 
-button {
+.createBtn {
     width: 75px;
     height: 25px;
 }
 
 .propHeader {
+    font-size: 30px;
+    background: gray;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+.itemsContainer {
+    width: 90%;
+    margin-top: 20px;
+    align-items: center;
+    border: 3px solid gray;
+    overflow-y: auto;
+    height: 300px;
+}
+
+.itemsContainer table {
+    width: 100%;
+    text-align: center;
+}
+
+
+.itemsContainer th {
+    color: #1880af;
+}
+
+.itemsContainer td {
+    font-size: 15px;
+    justify-content: center;
+}
+
+.itemsContainer td button {
+    width: 70px;
+    height: 20px;
+    font-weight: 600;
+    align-items: center;
+}
+
+.lnk {
+    text-decoration: none;
+    color: black;
 
 }
+
+.lnk:hover {
+    color: gray;
+}
+
+

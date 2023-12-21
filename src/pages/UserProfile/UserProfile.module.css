@@ -93,21 +93,21 @@
     height: 100%;
 }
 
-table {
+.reservationsContainer table {
     width: 100%;
     text-align: center;
 }
 
-th {
+.reservationsContainer th {
     color: #7F8F96;
 }
 
-td {
+.reservationsContainer td {
     font-size: 17px;
     justify-content: center;
 }
 
-td button {
+.reservationsContainer td button {
     width: 60px;
     height: 20px;
     font-weight: 600;

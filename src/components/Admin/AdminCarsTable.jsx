@@ -6,7 +6,7 @@ const AdminCarsTable = ({cars, onDelete}) => {
     const sortedCars = [...cars].sort((a, b) => a.id - b.id);
 
     return (
-        <div>
+        <div className={cl.itemsContainer}>
             <p className={cl.propHeader}>Cars</p>
             <table>
                 <thead>

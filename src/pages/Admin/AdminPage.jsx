@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useFetching} from "../../hooks/useFetching";
 import AdminService from "../../service/AdminService";
-import cl from "./Admin.module.css";
+import cl from "./AdminPage.module.css";
 import ZoneService from "../../service/ZoneService";
 import CarService from "../../service/CarService";
 import UserService from "../../service/UserService";
@@ -212,29 +212,23 @@ const AdminPage = () => {
                     zoneId={selectedZoneId}
                 />
             </Modal>
-
-            <div className={cl.leftContainer}>
-                <div className={cl.usersContainer}>
+            <div className={cl.adminContainer}>
+                <div className={cl.innerContainer}>
                     <AdminUsersTable
                         users={users}
                         onDelete={deleteUser}
                     />
-                </div>
-                <div className={cl.carsContainer}>
                     <AdminCarsTable
                         cars={cars}
                         onDelete={deleteCar}
                     />
                 </div>
-            </div>
-            <div className={cl.rightContainer}>
-                <div className={cl.reservationsContainer}>
+                <div className={cl.innerContainer}>
+
                     <AdminReservationsTable
                         reservations={reservations}
                         onDelete={deleteReservation}
                     />
-                </div>
-                <div className={cl.zonesContainer}>
                     <AdminZonesTable
                         zones={zones}
                         onCreatePlaces={openModalCreatePlaces}

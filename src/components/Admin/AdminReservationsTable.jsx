@@ -6,7 +6,7 @@ const AdminReservationsTable = ({reservations, onDelete}) => {
     const sortedReservations = [...reservations].sort((a, b) => a.id - b.id);
 
     return (
-        <div>
+        <div className={cl.itemsContainer}>
             <p className={cl.propHeader}>Reservations</p>
             <table>
                 <thead>
@@ -33,8 +33,7 @@ const AdminReservationsTable = ({reservations, onDelete}) => {
                         <td>{reservation.status}</td>
                         <td>{reservation.user?.email}</td>
                         <td>
-                            <button
-                                onClick={() => onDelete(reservation.id)}>
+                            <button onClick={() => onDelete(reservation.id)}>
                                 Delete
                             </button>
                         </td>

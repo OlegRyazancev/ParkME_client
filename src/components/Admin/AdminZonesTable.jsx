@@ -2,12 +2,18 @@ import React from 'react';
 import cl from "./Admin.module.css";
 import {Link} from "react-router-dom";
 
-const AdminZonesTable = ({zones, onCreatePlaces, onUpdateZone, onDelete, onCreateZone}) => {
+const AdminZonesTable = ({
+                             zones,
+                             onCreatePlaces,
+                             onUpdateZone,
+                             onDelete,
+                             onCreateZone
+                         }) => {
 
     const sortedZones = zones.sort((a, b) => a.id - b.id);
 
     return (
-        <div>
+        <div className={cl.itemsContainer}>
             <p className={cl.propHeader}>Zones</p>
             <table>
                 <thead>
@@ -22,21 +28,20 @@ const AdminZonesTable = ({zones, onCreatePlaces, onUpdateZone, onDelete, onCreat
                 {sortedZones.map((zone, index) => (
                     <tr key={index}>
                         <td>{index + 1}</td>
-                        <td><Link
-                            to={`/zones/${zone.id}`}>{zone.number}</Link>
+                        <td>
+                            <Link className={cl.lnk} to={`/zones/${zone.id}`}>
+                                {zone.number}
+                            </Link>
                         </td>
                         <td>{zone?.totalPlaces}</td>
                         <td>{zone?.freePlaces}</td>
                         <td>
-                            <button
-                                onClick={() => onCreatePlaces(zone.id)}>
+                            <button onClick={() => onCreatePlaces(zone.id)}>
                                 Add places
                             </button>
                         </td>
                         <td>
-                            <button
-                                onClick={() => onUpdateZone(zone.id)}
-                            >
+                            <button onClick={() => onUpdateZone(zone.id)}>
                                 Edit
                             </button>
                         </td>
@@ -49,7 +54,7 @@ const AdminZonesTable = ({zones, onCreatePlaces, onUpdateZone, onDelete, onCreat
                 ))}
                 </tbody>
             </table>
-            <button onClick={onCreateZone}>
+            <button className={cl.createBtn} onClick={onCreateZone}>
                 Create zone
             </button>
         </div>

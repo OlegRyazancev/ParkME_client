@@ -7,7 +7,7 @@ const AdminUsersTable = ({users, onDelete}) => {
     const sortedUsers = [...users].sort((a, b) => a.id - b.id);
 
     return (
-        <div>
+        <div className={cl.itemsContainer}>
             <p className={cl.propHeader}>Users</p>
             <table>
                 <thead>
@@ -22,7 +22,7 @@ const AdminUsersTable = ({users, onDelete}) => {
                     <tr key={index}>
                         <td>{index + 1}</td>
                         <td>
-                            <Link to={`/profile/${user.id}`}>
+                            <Link className={cl.lnk} to={`/profile/${user.id}`}>
                                 {user.name}
                             </Link>
                         </td>
