@@ -8,11 +8,11 @@ import Modal from "../../components/UI/Modal/Modal";
 import CarForm from "../../components/Car/CarForm";
 import {useNavigate, useParams} from "react-router-dom";
 import UserForm from "../../components/User/UserForm";
-import {useReservations} from "../../hooks/useReservations";
-import ReservationsFilter
-    from "../../components/Reservation/ReservationsFilter";
-import PageHeader from "../../components/UI/PageHeader/PageHeader";
 import ReservationForm from "../../components/Reservation/ReservationForm";
+import CarsTable from "../../components/Car/CarsTable";
+import UserInfo from "../../components/User/UserInfo";
+import ReservationsTable from "../../components/Reservation/ReservationsTable";
+import PageHeader from "../../components/UI/PageHeader/PageHeader";
 
 const UserProfile = () => {
 
@@ -21,7 +21,6 @@ const UserProfile = () => {
     const [user, setUser] = useState({})
     const [cars, setCars] = useState([]);
     const [reservations, setReservations] = useState([]);
-    const [filter, setFilter] = useState({sort: ''});
 
     const [selectedCar, setSelectedCar] = useState({});
     const [selectedReservation, setSelectedReservation] = useState({});
@@ -49,21 +48,6 @@ const UserProfile = () => {
     const openModalUpdateUser = () => setModalUpdateUser(true);
     const clearValidationMsg = () => setValidationMessage('');
 
-    const sortedReservations = useReservations(reservations, filter.sort);
-    const getStatusColor = (status) => {
-        switch (status) {
-            case 'ACTIVE':
-                return '#135d13';
-            case 'CANCELED':
-                return '#7c2020';
-            case 'PLANNED':
-                return '#917321'
-            case 'COMPLETED':
-                return '#187777';
-            default:
-                return 'white';
-        }
-    };
 
 
     const [fetchUser] = useFetching(async (id) => {
@@ -187,6 +171,39 @@ const UserProfile = () => {
 
     return (
         <div className="App">
+            <PageHeader value={"Profile"}/>
+            <div className={cl.profileContainer}>
+                <div className={cl.leftContainer}>
+                    <div className={cl.leftPropsContainer}>
+                        <UserInfo user={user}/>
+                    </div>
+                    <button onClick={openModalUpdateUser}>Edit</button>
+                    <div className={cl.leftPropsContainer}>
+                        <CarsTable cars={cars}
+                                   onUpdate={openModalUpdateCar}
+                                   onDelete={deleteCar}
+                        />
+                    </div>
+                    <button onClick={openModalCreateCar}>
+                        Add
+                    </button>
+                </div>
+                <div className={cl.rightContainer}>
+                    <div className={cl.createResContainer}>
+                        <span>Add new reservation: </span>
+                        <button onClick={() => navigate('/new-reservation')}>
+                            Create
+                        </button>
+                    </div>
+                    <div className={cl.reservationsContainer}>
+                        <ReservationsTable
+                            reservations={reservations}
+                            onUpdate={openModalUpdateReservation}
+                            onCancel={cancelReservation}
+                        />
+                    </div>
+                </div>
+            </div>
             <Modal
                 visible={modalMessage}
                 setVisible={setModalMessage}>
@@ -232,126 +249,6 @@ const UserProfile = () => {
                     reservation={selectedReservation}
                 />
             </Modal>
-            <PageHeader value={"Profile"}/>
-            <div className={cl.profileContainer}>
-                <div className={cl.leftContainer}>
-                    <div className={cl.leftPropsContainer}>
-                        <p className={cl.propHeader}>User Info</p>
-                        <p>
-                            <span className={cl.propName}>
-                                name:
-                            </span>
-                            {user.name}
-                        </p>
-                        <p>
-                            <span className={cl.propName}>
-                                email:
-                            </span>
-                            {user.email}
-                        </p>
-                    </div>
-                    <button onClick={openModalUpdateUser}>Edit</button>
-                    <div className={cl.leftPropsContainer}>
-                        <p className={cl.propHeader}>Cars</p>
-                        {cars.map((car) => (
-                            <div key={car.id} className={cl.carsContainer}>
-                                <div className={cl.carItem}>
-                                    <p>
-                                        <span className={cl.propName}>
-                                            number:
-                                        </span>
-                                        {car.number}
-                                    </p>
-                                    <p>
-                                        <span
-                                            className={cl.propName}>type:
-                                        </span>
-                                        {car.type}
-                                    </p>
-                                </div>
-                                <div>
-                                    <button
-                                        onClick={() => openModalUpdateCar(car)}>
-                                        Edit
-                                    </button>
-                                    <button onClick={() => deleteCar(car.id)}>
-                                        Delete
-                                    </button>
-                                </div>
-
-                            </div>
-                        ))}
-                    </div>
-                    <button onClick={openModalCreateCar}>
-                        Add
-                    </button>
-                </div>
-                <div className={cl.rightContainer}>
-                    <div className={cl.createResContainer}>
-                        <span>Add new reservation: </span>
-                        <button onClick={() => navigate('/new-reservation')}>
-                            Create
-                        </button>
-                    </div>
-                    <div className={cl.reservationsContainer}>
-                        <p className={cl.propHeader}>Reservations</p>
-                        <div>
-                            <ReservationsFilter
-                                filter={filter}
-                                setFilter={setFilter}
-                            />
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>Time From</th>
-                                    <th>Time To</th>
-                                    <th>Zone</th>
-                                    <th>Place</th>
-                                    <th>Car</th>
-                                    <th>Status</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {sortedReservations.map((reservation, index) => (
-                                    <tr key={index}>
-                                        <td>{reservation.timeFrom}</td>
-                                        <td>{reservation.timeTo}</td>
-                                        <td>{reservation.zone?.number}</td>
-                                        <td>{reservation.place?.number}</td>
-                                        <td>{reservation.car?.number}</td>
-                                        <td style={{color: getStatusColor(reservation.status)}}>
-                                            {reservation.status}
-                                        </td>
-                                        {(reservation.status === 'ACTIVE' || reservation.status === 'PLANNED')
-                                            ?
-                                            <>
-                                                <td>
-                                                    <button
-                                                        onClick={() => openModalUpdateReservation(reservation)}>
-                                                        Edit
-                                                    </button>
-                                                </td>
-                                                <td>
-                                                    <button
-                                                        onClick={() => cancelReservation(reservation.id)}>
-                                                        Cancel
-                                                    </button>
-                                                </td>
-                                            </>
-                                            :
-                                            <>
-                                                <td></td>
-                                                <td></td>
-                                            </>
-                                        }
-                                    </tr>
-                                ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     );
 };

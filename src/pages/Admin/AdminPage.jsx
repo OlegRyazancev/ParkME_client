@@ -14,6 +14,8 @@ import AdminUsersTable from "../../components/Admin/AdminUsersTable";
 import AdminCarsTable from "../../components/Admin/AdminCarsTable";
 import AdminReservationsTable
     from "../../components/Admin/AdminReservationsTable";
+import Loader from "../../components/UI/Loader/Loader";
+import PageHeader from "../../components/UI/PageHeader/PageHeader";
 
 const AdminPage = () => {
 
@@ -146,22 +148,22 @@ const AdminPage = () => {
         }
     })
 
-    const [fetchUsers] = useFetching(async () => {
+    const [fetchUsers, isUsersLoading] = useFetching(async () => {
         const response = await AdminService.getAllUsers();
         setUsers([...users, ...response.data]);
     });
 
-    const [fetchReservations] = useFetching(async () => {
+    const [fetchReservations, isReservationsLoading] = useFetching(async () => {
         const response = await AdminService.getAllReservations();
         setReservations([...reservations, ...response.data,]);
     });
 
-    const [fetchCars] = useFetching(async () => {
+    const [fetchCars, isCarsLoading] = useFetching(async () => {
         const response = await AdminService.getAllCars();
         setCars([...cars, ...response.data]);
     });
 
-    const [fetchZones] = useFetching(async () => {
+    const [fetchZones, isZonesLoading] = useFetching(async () => {
         const response = await ZoneService.getAll();
         setZones([...zones, ...response.data]);
     })
@@ -175,49 +177,17 @@ const AdminPage = () => {
 
     return (
         <div className="App">
-            <Modal
-                visible={modalMessage}
-                setVisible={setModalMessage}>
-                {message}
-            </Modal>
-
-            <Modal
-                visible={modalCreatePlaces}
-                setVisible={setModalCreatePlaces}
-                onClose={clearValidationMessage}>
-                <PlaceForm
-                    create={createPlaces}
-                    validation={validationMessage}
-                />
-            </Modal>
-
-            <Modal
-                visible={modalCreateZone}
-                setVisible={setModalCreateZone}
-                onClose={clearValidationMessage}>
-                <ZoneForm
-                    action={createZone}
-                    validation={validationMessage}
-                    zoneId={null}
-                />
-            </Modal>
-
-            <Modal
-                visible={modalUpdateZone}
-                setVisible={setModalUpdateZone}
-                onClose={clearValidationMessage}>
-                <ZoneForm
-                    action={updateZone}
-                    validation={validationMessage}
-                    zoneId={selectedZoneId}
-                />
-            </Modal>
+            <PageHeader value={"Admin page"}/>
             <div className={cl.adminContainer}>
                 <div className={cl.innerContainer}>
+
+                    {isUsersLoading && <Loader/>}
                     <AdminUsersTable
                         users={users}
                         onDelete={deleteUser}
                     />
+
+                    {isCarsLoading && <Loader/>}
                     <AdminCarsTable
                         cars={cars}
                         onDelete={deleteCar}
@@ -225,10 +195,13 @@ const AdminPage = () => {
                 </div>
                 <div className={cl.innerContainer}>
 
+                    {isReservationsLoading && <Loader/>}
                     <AdminReservationsTable
                         reservations={reservations}
                         onDelete={deleteReservation}
                     />
+
+                    {isZonesLoading && <Loader/>}
                     <AdminZonesTable
                         zones={zones}
                         onCreatePlaces={openModalCreatePlaces}
@@ -237,6 +210,44 @@ const AdminPage = () => {
                         onDelete={deleteZone}
                     />
                 </div>
+
+                <Modal
+                    visible={modalMessage}
+                    setVisible={setModalMessage}>
+                    {message}
+                </Modal>
+
+                <Modal
+                    visible={modalCreatePlaces}
+                    setVisible={setModalCreatePlaces}
+                    onClose={clearValidationMessage}>
+                    <PlaceForm
+                        create={createPlaces}
+                        validation={validationMessage}
+                    />
+                </Modal>
+
+                <Modal
+                    visible={modalCreateZone}
+                    setVisible={setModalCreateZone}
+                    onClose={clearValidationMessage}>
+                    <ZoneForm
+                        action={createZone}
+                        validation={validationMessage}
+                        zoneId={null}
+                    />
+                </Modal>
+
+                <Modal
+                    visible={modalUpdateZone}
+                    setVisible={setModalUpdateZone}
+                    onClose={clearValidationMessage}>
+                    <ZoneForm
+                        action={updateZone}
+                        validation={validationMessage}
+                        zoneId={selectedZoneId}
+                    />
+                </Modal>
             </div>
         </div>
     );
