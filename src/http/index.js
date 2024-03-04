@@ -1,6 +1,12 @@
 import axios from "axios";
 
-export const API_URL = `http://localhost:8080/api/v1`
+let apiUrl = `http://localhost:8080/api/v1`
+
+if (process.env.PROFILE_ACTIVE === `docker`) {
+    apiUrl = `http://${process.env.BACKEND_IMAGE}:${process.env.BACKEND_PORT}/api/v1`
+}
+
+export const API_URL = apiUrl
 const $api = axios.create({
     baseURL: API_URL
 })
