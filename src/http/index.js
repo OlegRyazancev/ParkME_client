@@ -1,16 +1,18 @@
 import axios from "axios";
 
-let apiUrl = `http://localhost:8080/api/v1`
+let apiUrl = `http://localhost:${process.env.BACKEND_PORT}/api/v1`
 
 if (process.env.PROFILE_ACTIVE === `docker`) {
-    apiUrl = `http://${process.env.BACKEND_IMAGE}:${process.env.BACKEND_PORT}/api/v1`
+    apiUrl = `http://host.docker.internal:${process.env.BACKEND_PORT}/api/v1`;
     console.log('docker profile');
 }
-export const API_URL = apiUrl
 
+export const API_URL = apiUrl
 const $api = axios.create({
     baseURL: API_URL
 })
+
+console.log($api)
 
 $api.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`
