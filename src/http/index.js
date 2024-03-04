@@ -1,9 +1,9 @@
 import axios from "axios";
 
-let apiUrl = `http://localhost:${process.env.BACKEND_PORT}/api/v1`
+let apiUrl = `http://localhost:8080/api/v1`
 
-if (process.env.PROFILE_ACTIVE === 'docker') {
-    apiUrl = `http://host.docker.internal:${process.env.BACKEND_PORT}/api/v1`;
+if (process.env.REACT_APP_PROFILE_ACTIVE === 'docker') {
+    apiUrl = `http://host.docker.internal:${process.env.REACT_APP_BACKEND_PORT}/api/v1`;
     console.log('docker profile');
 }
 console.log(apiUrl)
