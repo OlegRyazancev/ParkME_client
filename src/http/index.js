@@ -11,6 +11,8 @@ const $api = axios.create({
     baseURL: API_URL
 })
 
+console.log(apiUrl);
+
 $api.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`
     return config;
