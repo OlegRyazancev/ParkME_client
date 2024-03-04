@@ -7,7 +7,6 @@ if (process.env.REACT_APP_PROFILE_ACTIVE === 'docker') {
     console.log('docker profile');
 }
 console.log(apiUrl)
-console.log('default profile')
 
 export const API_URL = apiUrl
 const $api = axios.create({
