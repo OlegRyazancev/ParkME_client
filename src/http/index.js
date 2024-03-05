@@ -7,7 +7,7 @@ if (process.env.REACT_APP_PROFILE_ACTIVE === 'docker') {
     console.log('docker profile');
 }
 if (process.env.REACT_APP_PROFILE_ACTIVE === 'prod') {
-    apiUrl = `https://parkmeserver-production.up.railway.app/api/v1`;
+    apiUrl = `http://parkmeserver-production.up.railway.app/api/v1`;
     console.log('prod profile')
 }
 
