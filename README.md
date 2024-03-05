@@ -8,6 +8,8 @@ frontend for a fullstack parking application.
 
 You can check Java backend application [here](https://github.com/OlegRyazancev/ParkME_Server)
 
+Additionally, I have deployed the backend and frontend via Railway. You can access it [here](https://parkmeclient-production.up.railway.app/login)
+
 ## Setup
 
 You can find how to run this project locally or by Docker here (in production)
