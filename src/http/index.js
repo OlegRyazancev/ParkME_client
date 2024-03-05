@@ -6,6 +6,11 @@ if (process.env.REACT_APP_PROFILE_ACTIVE === 'docker') {
     apiUrl = `http://host.docker.internal:${process.env.REACT_APP_BACKEND_PORT}/api/v1`;
     console.log('docker profile');
 }
+if (process.env.REACT_APP_PROFILE_ACTIVE === 'prod') {
+    apiUrl = `parkmeserver-production.up.railway.app/api/v1`;
+    console.log('prod profile')
+}
+
 console.log(apiUrl)
 
 export const API_URL = apiUrl
