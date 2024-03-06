@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let apiUrl = `https://parkmeserver-production.up.railway.app`
+let apiUrl = 'http://localhost:9090/api/v1'
 
 if (process.env.REACT_APP_PROFILE_ACTIVE === 'docker') {
     apiUrl = `http://host.docker.internal:${process.env.REACT_APP_BACKEND_PORT}/api/v1`;
