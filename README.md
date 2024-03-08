@@ -12,4 +12,4 @@ You can check Java backend application [here](https://github.com/OlegRyazancev/P
 
 ## Setup
 
-You can find how to run this project locally or by Docker here (in production)
+You can find how to run this project locally or by Docker [here](https://youtu.be/Fnva5QtnoAQ)
